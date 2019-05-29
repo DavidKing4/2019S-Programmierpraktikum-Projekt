@@ -1,4 +1,4 @@
-from generator import Board
+from Generator import Board
 
 b = Board()
 print(b)

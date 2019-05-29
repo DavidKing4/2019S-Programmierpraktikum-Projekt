@@ -2,10 +2,10 @@ import pytrie as py
 import os
 
 # working directory
-os.getcwd()
+#os.getcwd()
 
 # Um "working directory" zu ändern | An dieser Stelle müssen wir eine Lösung finden direkt die Datei im Github-Ordner zu addressieren.
-os.chdir("C:/Users/Utku Bilen Demir/Desktop/e4Ke2/Math/Programmieren/ProProjekt/2019S-Programmierpraktikum-Projekt")
+#os.chdir("C:/Users/Utku Bilen Demir/Desktop/e4Ke2/Math/Programmieren/ProProjekt/2019S-Programmierpraktikum-Projekt")
 
 
 class Words:
@@ -47,39 +47,39 @@ class Words:
 
 """ TESTS """
 
-Words.trei(w,'a')
+# Words.trei(w,'a')
 
 
 
-Words.long_boi(w)
+# Words.long_boi(w)
 
-w = Words()
-print(w)
+# w = Words()
+# print(w)
 
-w.list[300000]
+# w.list[300000]
 
-w.list[len(w.list)-1]
+# w.list[len(w.list)-1]
 
 
-for i in wlist:
-    if i[1] == 'a':
-        return i
+# for i in wlist:
+#     if i[1] == 'a':
+#         return i
     
     
     
     
-lon = ''   
-for i in w.list:
-    if len(i) > len(lon):
-        lon= i
+# lon = ''   
+# for i in w.list:
+#     if len(i) > len(lon):
+#         lon= i
         
         
         
         
-lon
+# lon
 
 
-py.Trie(w.list)
+# py.Trie(w.list)
 
 
-py.Trie()
+# py.Trie()
