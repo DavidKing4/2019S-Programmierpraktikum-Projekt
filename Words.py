@@ -11,8 +11,8 @@ import os
 class Words:
     
     " Lese alle Wörter in eine Liste ein "
-    def __init__(self):    # Brauchen wir das wirklich als Funktion schreiben? Wir können später optimisieren
-        with open('words_alpha.txt') as word_file:
+    def __init__(self, path = 'words_alpha.txt'):    # Brauchen wir das wirklich als Funktion schreiben? Wir können später optimisieren
+        with open(path) as word_file:
             valid_words = list(word_file.read().split())
     
         self.list = valid_words
