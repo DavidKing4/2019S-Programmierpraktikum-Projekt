@@ -1,4 +1,4 @@
-#Tafel erzeugen 
+# Tafel erzeugen
 
 import random
 import string

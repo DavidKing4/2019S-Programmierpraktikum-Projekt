@@ -10,3 +10,4 @@ file = open('words_new.txt','w')
 
 for i in newWords:
 	file.write(i + '\n')
+
