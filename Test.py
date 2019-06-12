@@ -1,15 +1,15 @@
-import Generator
+import Board
 from Words import Words
 
-b = Generator.Board()
+b = Board.Board()
 print(b)
 
-print(Generator.Board(n=6))
+print(Board.Board(n=6))
 
 print(Words('words_new.txt').list[0])
 
 
-bo = Generator.Board()
+bo = Board.Board()
 bo.letters
 
 # manuel hoodies
@@ -38,6 +38,6 @@ for i in range(1,4):
     for j in range(1,4):
         l.append((i,j))
 
-bo.letters[l[1][1]][l[1][0]
+#bo.letters[l[1][1]][l[1][0]
 
-bo.hood(1,1)
+print(bo.hood(1,1))

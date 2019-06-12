@@ -41,7 +41,7 @@ class Words:
             print(f'pytrie ST start time: {startTime}')
             trie = pytrie.StringTrie(zip(self.list,list(range(len(self.list)))))
             print(f'pytrie ST time elapsed: {time.time() - startTime}')
-            print(trie.keys(prefix="aman"))
+            #print(trie.keys(prefix="aman"))
             return(trie)
 
         if trieType == 2:
@@ -70,20 +70,21 @@ class Words:
 
         if trieType == 5:
             startTime = time.time()
-            print(f'pygtrie dict start time: {startTime}')
+            print(f'dict start time: {startTime}')
             trie = dict(zip(self.list,list(range(len(self.list)))))
-            print(f'pygtrie dict time elapsed: {time.time() - startTime}')
+            print(f'dict time elapsed: {time.time() - startTime}')
             #print(trie.keys('ute'))
             return(trie)
 
 """ TESTS """
 
 # Trie Test
-w = Words()
+# w = Words()
 
-for i in range(5,6):
-    tr = Words.trie(w, i)
+# for i in range(6):
+#     tr = Words.trie(w, i)
 #print(tr.keys(prefix="aman"))
 #print(tr.keys(prefix="a"))
 
-
+# tr = w.trie(1)
+# print(tr.items(''))
