@@ -8,7 +8,7 @@ from operator import add
 class Board:
     # We need to prevent the repetitions
 
-    def __init__(self, n = 4, rand = 1, letters = []):    #Dynamic range with "n", in case we decide to alter the size of the board
+    def __init__(self, n = 4, rand = 1, letters = []):    # Dynamic range with "n", in case we decide to alter the size of the board
 
         if rand == 1:
             letters = [['' for i in range(n)] for j in range(n)]
