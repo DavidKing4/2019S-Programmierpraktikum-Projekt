@@ -38,9 +38,9 @@ class Words:
 
         if trieType == 1:
             startTime = time.time()
-            print(f'pytrie ST start time: {startTime}')
+            print(f'pytrie ST start')
             trie = pytrie.StringTrie(zip(self.list,list(range(len(self.list)))))
-            print(f'pytrie ST time elapsed: {time.time() - startTime}')
+            print(f'pytrie ST time elapsed: {time.time() - startTime:.2f}s')
             #print(trie.keys(prefix="aman"))
             return(trie)
 
