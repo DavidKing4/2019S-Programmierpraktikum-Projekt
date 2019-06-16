@@ -10,7 +10,7 @@ import time
 class Board:
     # We need to prevent the repetitions
 
-    def __init__(self, n = 4, rand = True, letters = []):    #Dynamic range with "n", in case we decide to alter the size of the board
+    def __init__(self, n = 4, rand = True, letters = []):    # Dynamic range with "n"
 
         if rand:
             letters = [['' for i in range(n)] for j in range(n)]
@@ -21,9 +21,11 @@ class Board:
 
         self.letters = letters
         self.size = n
+
+        "The list of the extracted words"
         self.words = []
 
-    def __str__(self): #up connetions counted before down connections in connection array
+    def __str__(self):    # up connections counted before down connections in connection array
         return str(self.letters)
 
     # a -- b -- a
@@ -40,10 +42,10 @@ class Board:
     # W XY Z ab c de f
     # x g- x h- x i- x
 
-    def spcPrint(self, connection = None): #__only functioning on a 4x4 board__
+    def spcPrint(self, connection = None):    # only functioning on a 4x4 board__
 
-        if connection == None:
-            connection = [False for i in range(72)]
+        if connection is None:   # U -> "is" instead of "=="
+            connection = [False for i in range(72)]    # Whole board -> False
 
         letters = self.letters
 
@@ -90,8 +92,10 @@ class Board:
             conPos += 1
         print(letters[j+1][i])
 
-
-    """ Benachbarte Buchstaben von einem beliebigen Buchstabe """
+    """ We won't be needing this part anymore I assume
+    
+    
+     Benachbarte Buchstaben von einem beliebigen Buchstabe
     def hood(self, row, col):
         # will be optimised
 
@@ -101,6 +105,7 @@ class Board:
             for j in range(row-1, col+2):
                 hoodies.append(self.letters[i][j])
         self.hoodies = hoodies
+    """
 
     #depth first search
     def dfs(self, board, trie, start = (0,0), prefix = '', cmdVis = False, connection = None):
@@ -156,7 +161,7 @@ class Board:
                                 print(f'start = {start}')
                                 print(f'next = {newStart}')
                                 
-                        self.dfs(newBoard, trie, newStart, newPrefix, cmdVis, newCon)#dfs @i with modified bord & prefix
-                        #add word to list if it is at the end of the trie
+                        self.dfs(newBoard, trie, newStart, newPrefix, cmdVis, newCon)# dfs @i with modified bord & prefix
+                        # add word to list if it is at the end of the trie
             
             return
