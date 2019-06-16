@@ -106,11 +106,14 @@ class Board:
     def dfs(self, board, trie, start = (0,0), prefix = '', cmdVis = False, connection = None):
 
             if cmdVis:
-                print(prefix)
+                print(f'prefix = {prefix}')
                 self.spcPrint(connection)
                 time.sleep(.15)
+                print('Found Words')
+                print('-----------')
                 for i in self.words:
                     print(i)
+                print('-----------')
 
             if cmdVis and connection == None:
                 connection = [False for i in range(42)]
