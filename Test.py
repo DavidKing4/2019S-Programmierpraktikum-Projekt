@@ -20,3 +20,12 @@ for i in range(len(board.letters)-1):
         board.dfs(temp, stringTrie, (i,j), cmdVis = True )
 
 
+
+set(board.words)
+
+board.letters
+
+
+
+
+board.letters[1][1]

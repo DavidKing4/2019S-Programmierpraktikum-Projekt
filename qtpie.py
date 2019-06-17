@@ -4,12 +4,14 @@ import Words
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (QApplication, QTextEdit, QLabel, QRadioButton, QCheckBox, QLineEdit, QSlider, QPushButton, QVBoxLayout, QApplication, QWidget)
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPalette
+from PyQt5 import QtCore
+from PyQt5 import QtGui
 import sys
 import os
 
 
 class Boggle(QtWidgets.QWidget):
-
     def __init__(self):
         super().__init__()
 
@@ -46,6 +48,15 @@ class Boggle(QtWidgets.QWidget):
 
 
 
+        """
+        # Board
+        self.board = Board.Board()
+
+        # Grid?
+        self.grid = QtWidgets.QGridLayout()
+        self.grid.addWidget(self.board.letters[0][0])
+
+        """
 
 
         """Layout Adjustments"""
@@ -134,5 +145,10 @@ class Boggle(QtWidgets.QWidget):
 
 
 app = QtWidgets.QApplication(sys.argv)
+app.setStyle('Fusion')     # ['Breeze', 'Oxygen', 'QtCurve', 'Windows', 'Fusion']
+palette = QPalette()
+#palette.setColor(QPalette.Background, Qt.blue)
+app.setStyleSheet("QPushButton { margin: 1ex; }")
+app.setPalette(palette)
 a_window = Boggle()
 sys.exit(app.exec_())
