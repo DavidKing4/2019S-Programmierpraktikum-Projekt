@@ -1,8 +1,8 @@
-import Board
+import Board as b
 import copy
 from Words import Words
 
-board = Board.Board()
+board = b.Board()
 print(board)
 board.spcPrint()
 words = Words()
@@ -22,15 +22,61 @@ for i in range(len(board.letters)-1):
     for j in range(len(board.letters)-1):
         print(board.dfs(temp, stringTrie, (i,j), cmdVis = True ))
 
+len(board.letters)
 
 
 
 
 set(board.words)
 
+
+board.words
+
 board.letters
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+w = Words()
+
+
+
 board.letters[1][1]
+
+
+
+Board.Board().letters
+
+
+
+
+w.trie(1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+board[0][0]

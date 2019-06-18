@@ -7,17 +7,24 @@ import random
 import string
 import time
 
+
 class Board:
     # We need to prevent the repetitions
 
     def __init__(self, n = 4, rand = True, letters = []):    # Dynamic range with "n"
 
+        lettersString = string.ascii_letters[:26]
         if rand:
             letters = [['' for i in range(n)] for j in range(n)]
-            lettersString = string.ascii_letters[:26]    # 'abcdefghijklmnopqrstuvwxyz'
+            # lettersString = string.ascii_letters[:26]    # 'abcdefghijklmnopqrstuvwxyz'
+            ran = []
+            while len(ran) < n**2:
+                ran.append(random.choice(lettersString))
+                ran = list(set(ran))
+
             for i in range(n):
                 for j in range(n):
-                    letters[i][j] = random.choice(lettersString)
+                    letters[i][j] = ran[(n*i)+j]
 
         self.letters = letters
         self.size = n
@@ -137,7 +144,7 @@ class Board:
                 x, y = newStart
                 if x >= 0 and x < self.size and y >= 0 and y < self.size:
                     newPrefix = prefix + board[x][y]
-                    if trie.items(newPrefix) != []:#i not already searched & i a valid space & valid prefix
+                    if trie.items(newPrefix) != []:    # i not already searched & i a valid space & valid prefix
                         newBoard = copy.deepcopy(board)
                         newBoard[x][y] = '-'
 
@@ -160,7 +167,14 @@ class Board:
                                 print(f'start = {start}')
                                 print(f'next = {newStart}')
                                 
-                        self.dfs(newBoard, trie, newStart, newPrefix, cmdVis, newCon)# dfs @i with modified bord & prefix
+                        self.dfs(newBoard, trie, newStart, newPrefix, cmdVis, newCon)
+                        # dfs @i with modified bord & prefix
                         # add word to list if it is at the end of the trie
             
             return
+
+    #board.dfs(temp, stringTrie, (1,1), startChar, cmdVis = True)
+    #def dfs2(self, board, trie, ):
+
+
+
