@@ -3,7 +3,8 @@ import copy
 import time
 from Words import Words
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import (QApplication, QTextEdit, QLabel, QRadioButton, QCheckBox, QLineEdit, QSlider, QPushButton, QVBoxLayout, QApplication, QWidget)
+from PyQt5.QtWidgets import (QApplication, QTextEdit, QLabel, QRadioButton, QCheckBox, QLineEdit, QSlider, QPushButton,
+                             QVBoxLayout, QApplication, QWidget)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPalette
 from PyQt5 import QtCore
@@ -24,10 +25,7 @@ import string
 import time
 
 
-
-
 class Boggle(object):
-
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -130,6 +128,7 @@ class Boggle(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     """ BOARD SETTINGS """
+
     def __init__(self):
         """ Board """
         self.board = b.Board()
@@ -139,6 +138,7 @@ class Boggle(object):
         # Button List
 
     """ BUTTON NAMES """
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "BOOGLE"))
@@ -159,23 +159,22 @@ class Boggle(object):
         self.pushButton_32.setText(_translate("MainWindow", self.board.letters[3][2]))
         self.pushButton_33.setText(_translate("MainWindow", self.board.letters[3][3]))
         self.label.setText(_translate("MainWindow", "TextLabel"))
-        self.textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.textEdit.setHtml(_translate("MainWindow",
+                                         "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                         "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                         "p, li { white-space: pre-wrap; }\n"
+                                         "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+                                         "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.pushButton_bo4.setText(_translate("MainWindow", "Exit"))
         self.pushButton_17.setText(_translate("MainWindow", "Run"))
         self.pushButton_18.setText(_translate("MainWindow", "Print"))
         self.pushButton_19.setText(_translate("MainWindow", "New Board"))
 
         """ BUTTON-FUNCTION CONNECTIONS """
-        self.pushButton_17.clicked.connect(lambda: self.newdfs(self.board, (0,0), self.words.trie(1), ""))
+        self.pushButton_17.clicked.connect(lambda: self.newdfs(self.board, (0, 0), self.words.trie(1), ""))
         self.pushButton_18.clicked.connect(self.btn_click)
         self.pushButton_19.clicked.connect(self.btn_click)
         self.pushButton_bo4.clicked.connect(self.btn_click)
-
-
 
         # Button List
 
@@ -183,7 +182,6 @@ class Boggle(object):
                       [self.pushButton_10, self.pushButton_11, self.pushButton_12, self.pushButton_13],
                       [self.pushButton_20, self.pushButton_21, self.pushButton_22, self.pushButton_23],
                       [self.pushButton_30, self.pushButton_31, self.pushButton_32, self.pushButton_33]]
-
 
     """ BUTTON FUNCTIONS """
 
@@ -224,18 +222,22 @@ class Boggle(object):
         elif sender.text() == 'Exit':
             self.textEdit.setText("Exit Button doesn't work yet")
 
-    def newdfs(self, board, start, trie, prefix):
+    def newdfs(self, board, start, trie, prefix, cmdVis=False, connection=None):
         self.blist[start[0]][start[1]].setStyleSheet("background-color: #03A9F4")
 
         indic = [-1, 0, 1]
 
         # Position of the origin letter
-        pos = board.letters[start[0]][start[1]]
+        if prefix == '':
+            prefix = board.letters[start[0]][start[1]]
+
+        if cmdVis and connection is None:
+            connection = [False for i in range(42)]
+
         prow = start[0]
         pcol = start[1]
 
-
-        print(pos)
+        print('First letter:' + prefix)
 
         neigh = []
 
@@ -243,27 +245,27 @@ class Boggle(object):
         for i in indic:
             for j in indic:
                 x = prow + i
-                y = pcol +j
-                if 0 <= x < 4 and 0 <= y < 4 and ([x,y]!=[prow,pcol]):
-                    neigh.append([x,y])
-                    self.blist[x][y].setStyleSheet("background-color:#BDBDBD")
+                y = pcol + j
+                if 0 <= x < 4 and 0 <= y < 4 and ([x, y] != [prow, pcol]):
+                    neigh.append([x, y])
+                    self.blist[x][y].setStyleSheet("background-color:#78909c")
 
         print(neigh)
 
         if trie.has_key(prefix):
             self.words.append(prefix)
             self.textEdit.setText(prefix)
-            
 
-
-
-
-
-
-
-
-
-
+        for k in neigh:
+            new_pos = k
+            ncol = k[0]
+            nrow = k[1]
+            nprefix = prefix + board.letters[ncol][nrow]
+            if trie.items(nprefix) != []:
+                newBoard = copy.deepcopy(board)
+                newBoard.letters[ncol][nrow] = '-'
+                self.blist[ncol][nrow].setStyleSheet("background-color:#78909c")
+                print(nprefix)
 
 
     # depth first search
@@ -272,14 +274,12 @@ class Boggle(object):
         # board = self.board
         trie = self.words.trie(1)
         temp = copy.deepcopy(self.board.letters)
-        start = (0,0)
+        start = (0, 0)
         prefix = ''
         cmdVis = False
         connection = None
 
         self.blist[start[0]][start[1]].setStyleSheet("background-color: blue")
-
-
 
         if cmdVis:
             print(f'prefix = {prefix}')
@@ -302,7 +302,6 @@ class Boggle(object):
             self.words.append(prefix)
             if cmdVis:
                 print(f'ADDED {prefix}')
-
 
         for i in directions:
             newStart = tuple(map(add, i, start))
@@ -345,6 +344,7 @@ class Boggle(object):
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Boggle()
