@@ -128,4 +128,3 @@ dmypy.json
 .pyre/
 
 /qtpie.py
-/GUI.py

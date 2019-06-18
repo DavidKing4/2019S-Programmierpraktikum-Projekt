@@ -107,8 +107,8 @@ class Board:
         self.hoodies = hoodies
     """
 
-    #depth first search
-    def dfs(self, board, trie, start = (0,0), prefix = '', cmdVis = False, connection = None):
+    # depth first search
+    def dfs(self, board, trie, start = (0, 0), prefix = '', cmdVis = False, connection = None):
 
             if cmdVis:
                 print(f'prefix = {prefix}')
@@ -127,11 +127,10 @@ class Board:
 
             directions = [(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1),(0,1)]
 
-            if trie.has_key(prefix): #current word is valid:
+            if trie.has_key(prefix):    # current word is valid:
                 self.words.append(prefix)
                 if cmdVis:
                     print(f'ADDED {prefix}')
-
 
             for i in directions:
                 newStart = tuple(map(add, i, start))
