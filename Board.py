@@ -18,15 +18,18 @@ class Board:
             lettersString = string.ascii_letters[:26]    # 'abcdefghijklmnopqrstuvwxyz'
             ran = []
             bran = []
-            if n <=5:
+            if n <=5:    # If the elements on the board are fewer than 26 there doesn't have to be any repetitions.
+
                 while len(ran) < n**2:
                      ran.append(random.choice(lettersString))
                      ran = list(set(ran))
 
                 for i in range(n):
                     for j in range(n):
-                        letters[i][j] = ran[(n*i)+j] #random.choice()
+                        letters[i][j] = ran[(n*i)+j]    # random.choice()
             else:
+                # If the number of elements greater than 26 there have to be some repetitions
+                # but we can reduce the repetitions by creating multiple genuine 26 letter lists
                 for i in range((n**2 // 26)+1):
                     while len(ran) < len(lettersString):
                         ran.append(random.choice(lettersString))
