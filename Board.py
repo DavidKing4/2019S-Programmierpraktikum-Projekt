@@ -1,5 +1,4 @@
 # Spiel Tafel
-
 import copy
 import math
 from operator import add
@@ -13,18 +12,18 @@ class Board:
 
     def __init__(self, n = 4, rand = True, letters = []):    # Dynamic range with "n"
 
-        lettersString = string.ascii_letters[:26]
+        #lettersString = string.ascii_letters[:26]
         if rand:
             letters = [['' for i in range(n)] for j in range(n)]
-            # lettersString = string.ascii_letters[:26]    # 'abcdefghijklmnopqrstuvwxyz'
-            ran = []
-            while len(ran) < n**2:
-                ran.append(random.choice(lettersString))
-                ran = list(set(ran))
+            lettersString = string.ascii_letters[:26]    # 'abcdefghijklmnopqrstuvwxyz'
+            # ran = []
+            # while len(ran) < n**2:
+            #     ran.append(random.choice(lettersString))
+            #     ran = list(set(ran))
 
             for i in range(n):
                 for j in range(n):
-                    letters[i][j] = ran[(n*i)+j]
+                    letters[i][j] = random.choice(lettersString)#ran[(n*i)+j]
 
         self.letters = letters
         self.size = n

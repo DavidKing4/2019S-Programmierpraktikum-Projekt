@@ -1,6 +1,7 @@
 # main function
 from Board import Board
 import copy
+from GUI import Boggle
 import pytrie
 import time
 from Words import Words
@@ -34,3 +35,4 @@ w = open('output.txt', 'w')
 
 for i in a:
 	w.write(f'{i}\n')
+	print(i)

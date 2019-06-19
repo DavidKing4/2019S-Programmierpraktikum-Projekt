@@ -247,6 +247,7 @@ class BOGGLE(object):
         self.words = Words()
         self.wordList = []
         self.size = 4
+        self.trie = self.words.trie(1)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -321,7 +322,7 @@ class BOGGLE(object):
         a = 1
         # while count < limit:
 
-        stringTrie = self.words.trie(1)
+        stringTrie = self.trie
 
         QtWidgets.qApp.processEvents()
         startChar = self.board.letters[bs[0]][bs[1]]
@@ -342,7 +343,7 @@ class BOGGLE(object):
         #while count < limit:
 
 
-        stringTrie = self.words.trie(1)
+        stringTrie = self.trie
         for i in range(n):
             for j in range(n):
 
@@ -353,7 +354,7 @@ class BOGGLE(object):
                 temp[i][j] = '-'
 
                 count += 100 / n**2
-                time.sleep(2)
+                #time.sleep(2)
                 self.progressBar.setValue(count)
 
                 self.dfsgui(temp, stringTrie, (i,j), startChar, chainList = [(i,j)], cmdVis = True)
