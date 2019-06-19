@@ -3,7 +3,7 @@ import copy
 import time
 from Words import Words
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import (QApplication, QTextEdit, QLabel, QRadioButton, QCheckBox, QLineEdit, QSlider, QPushButton, QVBoxLayout, QApplication, QWidget)
+from PyQt5.QtWidgets import ( QApplication, QTextEdit, QLabel, QRadioButton, QCheckBox, QLineEdit, QSlider, QPushButton, QVBoxLayout, QApplication, QWidget)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPalette
 from PyQt5 import QtCore
@@ -133,6 +133,7 @@ class Boggle(object):
     def __init__(self):
         """ Board """
         self.board = b.Board()
+        print(self.board)
         self.words = Words()
         self.wordList = []
         self.size = 4
@@ -174,7 +175,7 @@ class Boggle(object):
         self.pushButton_17.clicked.connect(lambda: self.dfsguiprep())
         self.pushButton_18.clicked.connect(self.btn_click)
         self.pushButton_19.clicked.connect(self.btn_click)
-        self.pushButton_bo4.clicked.connect(self.btn_click)
+        self.pushButton_bo4.clicked.connect(lambda: self.ultidfs(self.board, (0,0), self.words.trie(1), ''))
 
 
 
@@ -199,11 +200,52 @@ class Boggle(object):
 
                 self.board.dfs(temp, stringTrie, (3, 0), cmdVis=True)
 
-    def dfs_gui(self):
-        board = self.board
-        trie = self.words.trie(1)
-        temp = copy.deepcopy(self.board.letters)
-        pass
+    def ultidfs(self, board, start, trie, prefix, vis = []):
+        QtWidgets.qApp.processEvents()
+        r = start[0]
+        c = start[1]
+        pre = prefix
+        if vis is not [] and (r,c) in vis:
+            return
+
+
+        QtWidgets.qApp.processEvents()
+        lt = board.letters[r][c]
+        pre += lt
+        print('Starting letter: '+lt)
+        self.blist[r][c].setStyleSheet("background-color: #03A9F4")
+        vis.append((r,c))
+
+        QtWidgets.qApp.processEvents()
+        indic = [-1, 0, 1]
+        neigh = []
+        # Neighboors of the origin letter
+        for i in indic:
+            for j in indic:
+                x = r + i
+                y = c + j
+                if 0 <= x < 4 and 0 <= y < 4 and ([x, y] != [r, c]):
+                    neigh.append([x, y])
+                    self.blist[x][y].setStyleSheet("background-color:#78909c")
+
+        print(neigh)
+
+        if trie.has_key(pre):
+            #self.board.words.list.append(pre)
+            self.textEdit.append(pre)
+
+            for n in neigh:
+                self.ultidfs( self.board, (n[0],n[1]), self.words.trie(1), pre, vis)
+
+
+
+
+
+
+
+
+
+
 
     def btn_click(self):
         sender = self.MainWindow.sender()
@@ -254,10 +296,17 @@ class Boggle(object):
         if trie.has_key(prefix):
             self.words.append(prefix)
             self.textEdit.setText(prefix)
-            
 
 
 
+
+
+
+
+    def rem_col(self):
+        for i in range(3):
+            for j in range(3):
+                self.blist[i][j].setStyleSheet("background-color: None")
 
 
 
@@ -267,33 +316,39 @@ class Boggle(object):
 
     def dfsguiprep(self):
         stringTrie = self.words.trie(1)
-        for i in range(3):
-            for j in range(3):
-                startChar = self.board.letters[j][i]
+        for i in range(4):
+            for j in range(4):
+                QtWidgets.qApp.processEvents()
+                startChar = self.board.letters[i][j]
                 temp = copy.deepcopy(self.board.letters)
-                temp[j][i] = '-'
+                temp[i][j] = '-'
 
-                self.dfsgui(temp, stringTrie, (j,i), startChar, cmdVis = True)
+                self.dfsgui(temp, stringTrie, (i,j), startChar, chainList = [(i,j)], cmdVis = True)
 
     # depth first search
-    def dfsgui(self, board, trie, start = (0, 0), prefix = '', cmdVis = False, connection = None):
-
-        # board = self.board
-
-        self.blist[start[0]][start[1]].setStyleSheet("background-color: blue")
+    def dfsgui(self, board, trie, start = (0, 0), prefix = '', chainList = [], cmdVis = False, connection = None):
 
         QtWidgets.qApp.processEvents()
 
         if cmdVis:
             print(f'prefix = {prefix}')
+            print(board)
             self.board.spcPrint(connection)
             time.sleep(.15)
             print('Found Words')
             print('-----------')
-            for i in self.wordList:
-                self.textEdit.setText(i)
+            # for i in self.wordList:
+            #     self.textEdit.setText(i)
+            #     print(i)
+            wlist = set(self.wordList)
+            self.textEdit.clear()
+            for i in wlist:
+                self.textEdit.append(i)
                 print(i)
             print('-----------')
+
+        for i in chainList:
+            self.blist[i[0]][i[1]].setStyleSheet("background-color: #03A9F4")
 
         if cmdVis and connection == None:
             connection = [False for i in range(42)]
@@ -304,15 +359,29 @@ class Boggle(object):
 
         if trie.has_key(prefix):  # current word is valid:
             self.wordList.append(prefix)
+            for i in chainList:
+                self.blist[i[0]][i[1]].setStyleSheet("background-color: #00cc00")
             if cmdVis:
                 print(f'ADDED {prefix}')
+                print(chainList)
+            self.textEdit.append(f'ADDED {prefix}')
+            QtWidgets.qApp.processEvents()
+            time.sleep(.5)
+            #input()
 
+        QtWidgets.qApp.processEvents()
 
         for i in directions:
             newStart = tuple(map(add, i, start))
             x, y = newStart
+
+
             if x >= 0 and x < self.size and y >= 0 and y < self.size:
+                #if cmdVis is True:
+                    #self.blist[x][y].setStyleSheet("background-color: #78909c")
                 newPrefix = prefix + board[x][y]
+                newChainList = copy.deepcopy(chainList)
+                newChainList.append((newStart[0],newStart[1]))
                 if trie.items(newPrefix) != []:  # i not already searched & i a valid space & valid prefix
                     newBoard = copy.deepcopy(board)
                     newBoard[x][y] = '-'
@@ -335,12 +404,14 @@ class Boggle(object):
                             newCon[13 * min(start[1], y) + 3 * max(start[0], x) + 2] = True
                             print(f'start = {start}')
                             print(f'next = {newStart}')
+                    QtWidgets.qApp.processEvents()
 
-                    self.dfsgui(newBoard, trie, newStart, newPrefix, cmdVis, newCon)
+                    self.dfsgui(newBoard, trie, newStart, newPrefix, newChainList, cmdVis, newCon)
                     # newBoard, trie, newStart, newPrefix, cmdVis, newCon
                     # dfs @i with modified bord & prefix
                     # add word to list if it is at the end of the trie
 
+        self.blist[start[0]][start[1]].setStyleSheet("background-color: None")
         return
 
     # board.dfs(temp, stringTrie, (1,1), startChar, cmdVis = True)
