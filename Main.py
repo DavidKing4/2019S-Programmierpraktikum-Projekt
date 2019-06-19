@@ -36,3 +36,7 @@ w = open('output.txt', 'w')
 for i in a:
 	w.write(f'{i}\n')
 	print(i)
+
+input()
+
+

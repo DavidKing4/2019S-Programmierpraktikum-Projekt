@@ -16,14 +16,27 @@ class Board:
         if rand:
             letters = [['' for i in range(n)] for j in range(n)]
             lettersString = string.ascii_letters[:26]    # 'abcdefghijklmnopqrstuvwxyz'
-            # ran = []
-            # while len(ran) < n**2:
-            #     ran.append(random.choice(lettersString))
-            #     ran = list(set(ran))
+            ran = []
+            bran = []
+            if n <=5:
+                while len(ran) < n**2:
+                     ran.append(random.choice(lettersString))
+                     ran = list(set(ran))
 
-            for i in range(n):
-                for j in range(n):
-                    letters[i][j] = random.choice(lettersString)#ran[(n*i)+j]
+                for i in range(n):
+                    for j in range(n):
+                        letters[i][j] = ran[(n*i)+j] #random.choice()
+            else:
+                for i in range((n**2 // 26)+1):
+                    while len(ran) < len(lettersString):
+                        ran.append(random.choice(lettersString))
+                        ran = list(set(ran))
+                    # bran.append(lambda: ran[k] for k in range(len(ran)-1))
+                    bran += ran
+
+                for imp in range(n):
+                    for jan in range(n):
+                        letters[imp][jan] = bran[(n*imp)+jan]
 
         self.letters = letters
         self.size = n
@@ -98,7 +111,7 @@ class Board:
             conPos += 1
         print(letters[j+1][i])
 
-    """ We won't be needing this part anymore I assume
+    """ We won't be needing this part anymore, I assume
     
     
      Benachbarte Buchstaben von einem beliebigen Buchstabe

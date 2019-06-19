@@ -4,6 +4,7 @@ import copy
 from operator import add
 import time
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import qApp
 
 
 
@@ -248,6 +249,8 @@ class BOGGLE(object):
         self.wordList = []
         self.size = 4
         self.trie = self.words.trie(1)
+        MainWindow.EXIT_CODE_REBOOT = -12345678  # or whatever number not already taken
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -304,6 +307,8 @@ class BOGGLE(object):
         self.pushButton_31.clicked.connect(lambda: self.dfsguisingle((3,1)))
         self.pushButton_32.clicked.connect(lambda: self.dfsguisingle((3,2)))
         self.pushButton_33.clicked.connect(lambda: self.dfsguisingle((3,3)))
+        self.pushButton_200.clicked.connect(self.newBoard)
+
 
         """ Button List """
 
@@ -314,6 +319,9 @@ class BOGGLE(object):
 
     """ BUTTON FUNCTIONS """
 
+    def newBoard(self):
+        self.board = b.Board()
+        qApp.exit(MainWindow.EXIT_CODE_REBOOT)
 
 
     def dfsguisingle(self, bs):
@@ -330,7 +338,7 @@ class BOGGLE(object):
         temp[bs[0]][bs[1]] = '-'
 
         """count += 100 / n
-        time.sleep(2)
+        #time.sleep(2)
         self.progressBar.setValue(count)"""
 
         self.dfsgui(temp, stringTrie, (bs[0], bs[1]), startChar, chainList=[(bs[0], bs[1])], cmdVis=True)
@@ -368,7 +376,7 @@ class BOGGLE(object):
             print(f'prefix = {prefix}')
             print(board)
             self.board.spcPrint(connection)
-            time.sleep(.15)
+            #time.sleep(.15)
             print('Found Words')
             print('-----------')
             # for i in self.wordList:
@@ -400,7 +408,7 @@ class BOGGLE(object):
                 print(chainList)
             self.textEdit.append(f'--> {prefix}')
             QtWidgets.qApp.processEvents()
-            time.sleep(.5)
+            #time.sleep(.5)
             #input()
 
         QtWidgets.qApp.processEvents()
