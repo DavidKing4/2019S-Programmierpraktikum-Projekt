@@ -278,6 +278,7 @@ class Boggle(object):
     # depth first search
     def dfsgui(self, board, trie, start = (0, 0), prefix = '', cmdVis = False, connection = None):
 
+
         # board = self.board
 
         self.blist[start[0]][start[1]].setStyleSheet("background-color: blue")
@@ -306,7 +307,7 @@ class Boggle(object):
             if cmdVis:
                 print(f'ADDED {prefix}')
 
-
+        QtWidgets.qApp.processEvents()
         for i in directions:
             newStart = tuple(map(add, i, start))
             x, y = newStart
@@ -334,6 +335,7 @@ class Boggle(object):
                             newCon[13 * min(start[1], y) + 3 * max(start[0], x) + 2] = True
                             print(f'start = {start}')
                             print(f'next = {newStart}')
+                    QtWidgets.qApp.processEvents()
 
                     self.dfsgui(newBoard, trie, newStart, newPrefix, cmdVis, newCon)
                     # newBoard, trie, newStart, newPrefix, cmdVis, newCon
