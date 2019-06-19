@@ -3,7 +3,7 @@ import copy
 import time
 from Words import Words
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import (QApplication, QTextEdit, QLabel, QRadioButton, QCheckBox, QLineEdit, QSlider, QPushButton, QVBoxLayout, QApplication, QWidget)
+from PyQt5.QtWidgets import ( QApplication, QTextEdit, QLabel, QRadioButton, QCheckBox, QLineEdit, QSlider, QPushButton, QVBoxLayout, QApplication, QWidget)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPalette
 from PyQt5 import QtCore
@@ -174,7 +174,7 @@ class Boggle(object):
         self.pushButton_17.clicked.connect(lambda: self.dfsguiprep())
         self.pushButton_18.clicked.connect(self.btn_click)
         self.pushButton_19.clicked.connect(self.btn_click)
-        self.pushButton_bo4.clicked.connect(self.btn_click)
+        self.pushButton_bo4.clicked.connect(lambda: self.ultidfs(self.board, (0,0), self.words.trie(1), ''))
 
 
 
@@ -199,11 +199,52 @@ class Boggle(object):
 
                 self.board.dfs(temp, stringTrie, (3, 0), cmdVis=True)
 
-    def dfs_gui(self):
-        board = self.board
-        trie = self.words.trie(1)
-        temp = copy.deepcopy(self.board.letters)
-        pass
+    def ultidfs(self, board, start, trie, prefix, vis = []):
+        QtWidgets.qApp.processEvents()
+        r = start[0]
+        c = start[1]
+        pre = prefix
+        if vis is not [] and (r,c) in vis:
+            return
+
+
+        QtWidgets.qApp.processEvents()
+        lt = board.letters[r][c]
+        pre += lt
+        print('Starting letter: '+lt)
+        self.blist[r][c].setStyleSheet("background-color: #03A9F4")
+        vis.append((r,c))
+
+        QtWidgets.qApp.processEvents()
+        indic = [-1, 0, 1]
+        neigh = []
+        # Neighboors of the origin letter
+        for i in indic:
+            for j in indic:
+                x = r + i
+                y = c + j
+                if 0 <= x < 4 and 0 <= y < 4 and ([x, y] != [r, c]):
+                    neigh.append([x, y])
+                    self.blist[x][y].setStyleSheet("background-color:#78909c")
+
+        print(neigh)
+
+        if trie.has_key(pre):
+            #self.board.words.list.append(pre)
+            self.textEdit.append(pre)
+
+            for n in neigh:
+                self.ultidfs( self.board, (n[0],n[1]), self.words.trie(1), pre, vis)
+
+
+
+
+
+
+
+
+
+
 
     def btn_click(self):
         sender = self.MainWindow.sender()
@@ -261,6 +302,13 @@ class Boggle(object):
 
 
 
+    def rem_col(self):
+        for i in range(3):
+            for j in range(3):
+                self.blist[i][j].setStyleSheet("background-color: None")
+
+
+
 
 
 #self.board.letters, self.words.trie(1), (0,0), '', cmdVis = True, newCon = None
@@ -268,7 +316,10 @@ class Boggle(object):
     def dfsguiprep(self):
         stringTrie = self.words.trie(1)
         for i in range(3):
+            self.rem_col()
             for j in range(3):
+                self.rem_col()
+                QtWidgets.qApp.processEvents()
                 startChar = self.board.letters[j][i]
                 temp = copy.deepcopy(self.board.letters)
                 temp[j][i] = '-'
@@ -281,7 +332,7 @@ class Boggle(object):
 
         # board = self.board
 
-        self.blist[start[0]][start[1]].setStyleSheet("background-color: blue")
+        self.blist[start[0]][start[1]].setStyleSheet("background-color: #03A9F4")
 
 
 
@@ -291,8 +342,12 @@ class Boggle(object):
             time.sleep(.15)
             print('Found Words')
             print('-----------')
-            for i in self.wordList:
-                self.textEdit.setText(i)
+
+            wlist = set(self.wordList)
+            for i in wlist:
+                self.textEdit.append(i)
+
+
             print('-----------')
 
         if cmdVis and connection == None:
@@ -311,7 +366,11 @@ class Boggle(object):
         for i in directions:
             newStart = tuple(map(add, i, start))
             x, y = newStart
+
+
             if x >= 0 and x < self.size and y >= 0 and y < self.size:
+                #if cmdVis is True:
+                    #self.blist[x][y].setStyleSheet("background-color: #78909c")
                 newPrefix = prefix + board[x][y]
                 if trie.items(newPrefix) != []:  # i not already searched & i a valid space & valid prefix
                     newBoard = copy.deepcopy(board)
