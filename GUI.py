@@ -282,7 +282,7 @@ class Boggle(object):
 
         self.blist[start[0]][start[1]].setStyleSheet("background-color: blue")
 
-
+        QtWidgets.qApp.processEvents()
 
         if cmdVis:
             print(f'prefix = {prefix}')
@@ -292,6 +292,7 @@ class Boggle(object):
             print('-----------')
             for i in self.wordList:
                 self.textEdit.setText(i)
+                print(i)
             print('-----------')
 
         if cmdVis and connection == None:
