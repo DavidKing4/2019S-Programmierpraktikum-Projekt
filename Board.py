@@ -17,14 +17,30 @@ class Board:
         if rand:
             letters = [['' for i in range(n)] for j in range(n)]
             lettersString = string.ascii_letters[:26]    # 'abcdefghijklmnopqrstuvwxyz'
-            # ran = []
-            # while len(ran) < n**2:
-            #     ran.append(random.choice(lettersString))
-            #     ran = list(set(ran))
+            ran = []
+            bran = []
+            if n <=5:    # If the elements on the board are fewer than 26 there doesn't have to be any repetitions.
 
-            for i in range(n):
-                for j in range(n):
-                    letters[i][j] = random.choice(lettersString)#ran[(n*i)+j]
+                while len(ran) < n**2:
+                     ran.append(random.choice(lettersString))
+                     ran = list(set(ran))
+
+                for i in range(n):
+                    for j in range(n):
+                        letters[i][j] = ran[(n*i)+j]    # random.choice()
+            else:
+                # If the number of elements greater than 26 there have to be some repetitions
+                # but we can reduce the repetitions by creating multiple genuine 26 letter lists
+                for i in range((n**2 // 26)+1):
+                    while len(ran) < len(lettersString):
+                        ran.append(random.choice(lettersString))
+                        ran = list(set(ran))
+                    # bran.append(lambda: ran[k] for k in range(len(ran)-1))
+                    bran += ran
+
+                for imp in range(n):
+                    for jan in range(n):
+                        letters[imp][jan] = bran[(n*imp)+jan]
 
         self.letters = letters
         self.size = n
@@ -98,6 +114,7 @@ class Board:
                 print('   ', end = '')
             conPos += 1
         print(letters[j+1][i])
+
 
     # depth first search
     def dfs(self, board, trie, start = (0, 0), prefix = '', cmdVis = False, connection = None, guiVis = False, gui = False, chainList = []): #big boy function
