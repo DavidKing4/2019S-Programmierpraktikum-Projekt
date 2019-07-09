@@ -2,6 +2,7 @@
 import copy
 import math
 from operator import add
+from PyQt5 import QtWidgets
 import random
 import string
 import time
@@ -49,7 +50,7 @@ class Board:
     # x g- x h- x i- x
 
     def spcPrint(self, connection = None):    # only functioning on a 4x4 board__
-
+                                              # Primarily for debuging
         if connection is None:   # U -> "is" instead of "=="
             connection = [False for i in range(72)]    # Whole board -> False
 
@@ -98,82 +99,78 @@ class Board:
             conPos += 1
         print(letters[j+1][i])
 
-    """ We won't be needing this part anymore I assume
-    
-    
-     Benachbarte Buchstaben von einem beliebigen Buchstabe
-    def hood(self, row, col):
-        # will be optimised
-
-        le_pos = self.letters[row][col]
-        hoodies = []
-        for i in range(row-1, row+2):
-            for j in range(row-1, col+2):
-                hoodies.append(self.letters[i][j])
-        self.hoodies = hoodies
-    """
-
     # depth first search
-    def dfs(self, board, trie, start = (0, 0), prefix = '', cmdVis = False, connection = None):
+    def dfs(self, board, trie, start = (0, 0), prefix = '', cmdVis = False, connection = None, guiVis = False, gui = False, chainList = []): #big boy function
 
+        if cmdVis:
+            print(f'prefix = {prefix}')
+            self.spcPrint(connection)
+            time.sleep(.15)
+            print('Found Words')
+            print('-----------')
+            for i in self.words:
+                print(i)
+            print('-----------')
+
+        if cmdVis and connection == None:
+            connection = [False for i in range(42)]
+
+        if guiVis:
+            for i in chainList:
+                gui.blist[i[0]][i[1]].setStyleSheet("background-color: #03A9F4")
+            QtWidgets.qApp.processEvents()
+
+        board = copy.deepcopy(board)
+
+        directions = [(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1),(0,1)]
+
+        if trie.has_key(prefix):    # current word is valid:
+            self.words.append(prefix)
             if cmdVis:
-                print(f'prefix = {prefix}')
-                self.spcPrint(connection)
-                time.sleep(.15)
-                print('Found Words')
-                print('-----------')
-                for i in self.words:
-                    print(i)
-                print('-----------')
+                print(f'ADDED {prefix}')
+            if guiVis:
+                for i in chainList:
+                    gui.blist[i[0]][i[1]].setStyleSheet("background-color: #00cc00")
+                gui.textEdit.append(f'--> {prefix}')
+                QtWidgets.qApp.processEvents()
 
-            if cmdVis and connection == None:
-                connection = [False for i in range(42)]
+        for i in directions:
+            newStart = tuple(map(add, i, start))
+            x, y = newStart
+            if x >= 0 and x < self.size and y >= 0 and y < self.size:
+                newPrefix = prefix + board[x][y]
+                if guiVis:
+                    newChainList = copy.deepcopy(chainList)
+                    newChainList.append((newStart[0],newStart[1]))
+                else:
+                    newChainList = chainList
+                if trie.items(newPrefix) != []:    # i not already searched & i a valid space & valid prefix
+                    newBoard = copy.deepcopy(board)
+                    newBoard[x][y] = '-'
 
-            board = copy.deepcopy(board)
+                    newCon = copy.deepcopy(connection)
+                    if cmdVis:
+                        if i == (1, 0) or i == (-1, 0):
+                            newCon[13 * y + min(start[0], x)] = True
+                            print(f'start = {start}')
+                            print(f'next = {newStart}')
+                        if i == (0, 1) or i == (0, -1):
+                            newCon[13 * min(start[1], y) + 3 * (x + 1)] = True
+                            print(f'start = {start}')
+                            print(f'next = {newStart}')
+                        if i == (-1, 1) or i == (1, -1):
+                            newCon[13 * min(start[1], y) + 3 * max(start[0], x) + 1] = True
+                            print(f'start = {start}')
+                            print(f'next = {newStart}')
+                        if i == (1, 1) or i == (-1, -1):
+                            newCon[13 * min(start[1], y) + 3 * max(start[0], x) + 2] = True
+                            print(f'start = {start}')
+                            print(f'next = {newStart}')
 
-            directions = [(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1),(0,1)]
-
-            if trie.has_key(prefix):    # current word is valid:
-                self.words.append(prefix)
-                if cmdVis:
-                    print(f'ADDED {prefix}')
-
-            for i in directions:
-                newStart = tuple(map(add, i, start))
-                x, y = newStart
-                if x >= 0 and x < self.size and y >= 0 and y < self.size:
-                    newPrefix = prefix + board[x][y]
-                    if trie.items(newPrefix) != []:    # i not already searched & i a valid space & valid prefix
-                        newBoard = copy.deepcopy(board)
-                        newBoard[x][y] = '-'
-
-                        newCon = copy.deepcopy(connection)
-                        if cmdVis:
-                            if i == (1,0) or i == (-1,0):
-                                newCon[13*y + min(start[0], x)] = True
-                                print(f'start = {start}')
-                                print(f'next = {newStart}')
-                            if i == (0,1) or i == (0,-1):
-                                newCon[13*min(start[1], y) + 3*(x + 1)] = True
-                                print(f'start = {start}')
-                                print(f'next = {newStart}')
-                            if i == (-1,1) or i == (1,-1):
-                                newCon[13*min(start[1], y) + 3*max(start[0], x) + 1] = True
-                                print(f'start = {start}')
-                                print(f'next = {newStart}')
-                            if i == (1,1) or i == (-1,-1):
-                                newCon[13*min(start[1], y) + 3*max(start[0], x) + 2] = True
-                                print(f'start = {start}')
-                                print(f'next = {newStart}')
-                                
-                        self.dfs(newBoard, trie, newStart, newPrefix, cmdVis, newCon)
-                        # dfs @i with modified bord & prefix
-                        # add word to list if it is at the end of the trie
-            
-            return
-
-    #board.dfs(temp, stringTrie, (1,1), startChar, cmdVis = True)
-    #def dfs2(self, board, trie, ):
-
-
-
+                    QtWidgets.qApp.processEvents()
+                            
+                    self.dfs(newBoard, trie, newStart, newPrefix, cmdVis, newCon, guiVis, gui, newChainList)
+                    # dfs @i with modified bord & prefix
+                    # add word to list if it is at the end of the trie
+        gui.blist[start[0]][start[1]].setStyleSheet("background-color: None")
+        return

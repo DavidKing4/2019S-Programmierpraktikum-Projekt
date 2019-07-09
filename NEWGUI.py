@@ -1,11 +1,9 @@
-import Board as b
-from Words import Words
+from Board import *
 import copy
 from operator import add
-import time
 from PyQt5 import QtCore, QtGui, QtWidgets
-
-
+import time
+from Words import Words
 
 
 class BOGGLE(object):
@@ -240,14 +238,15 @@ class BOGGLE(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     """ BOARD SETTINGS """
-    def __init__(self):
+    def __init__(self, board = None, size = 4, trie = None, words = None):
         """ Board """
-        self.board = b.Board()
-        print(self.board)
-        self.words = Words()
+        if board == None:
+            self.board = Board()
+        if words == None:
+            self.words = Words()
+        if trie == None:
+           self.trie = self.words.trie()
         self.wordList = []
-        self.size = 4
-        self.trie = self.words.trie(1)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -317,136 +316,118 @@ class BOGGLE(object):
 
 
     def dfsguisingle(self, bs):
-        count = 0
-        limit = 100
-        a = 1
-        # while count < limit:
 
         stringTrie = self.trie
-
-        QtWidgets.qApp.processEvents()
         startChar = self.board.letters[bs[0]][bs[1]]
         temp = copy.deepcopy(self.board.letters)
         temp[bs[0]][bs[1]] = '-'
 
-        """count += 100 / n
-        time.sleep(2)
-        self.progressBar.setValue(count)"""
-
-        self.dfsgui(temp, stringTrie, (bs[0], bs[1]), startChar, chainList=[(bs[0], bs[1])], cmdVis=True)
+        Board.dfs(self.board, temp, stringTrie, (bs[0], bs[1]), startChar, False, None, True, self, [(bs[0], bs[1])])
 
     def dfsguiprep(self):
 
         count = 0
         limit = 100
-        n=4
-        #while count < limit:
-
+        n = 4
 
         stringTrie = self.trie
         for i in range(n):
             for j in range(n):
-
 
                 QtWidgets.qApp.processEvents()
                 startChar = self.board.letters[i][j]
                 temp = copy.deepcopy(self.board.letters)
                 temp[i][j] = '-'
 
+                Board.dfs(self.board, temp, stringTrie, (i,j), startChar, False, None, True, self, [(i,j)])
+
                 count += 100 / n**2
-                #time.sleep(2)
                 self.progressBar.setValue(count)
 
-                self.dfsgui(temp, stringTrie, (i,j), startChar, chainList = [(i,j)], cmdVis = True)
-
     # depth first search
-    def dfsgui(self, board, trie, start = (0, 0), prefix = '', chainList = [], cmdVis = False, connection = None):
+    # def dfsgui(self, board, trie, start = (0, 0), prefix = '', chainList = [], cmdVis = False, connection = None):
 
-        QtWidgets.qApp.processEvents()
+    #     QtWidgets.qApp.processEvents()
 
-        if cmdVis:
-            print(f'prefix = {prefix}')
-            print(board)
-            self.board.spcPrint(connection)
-            time.sleep(.15)
-            print('Found Words')
-            print('-----------')
-            # for i in self.wordList:
-            #     self.textEdit.setText(i)
-            #     print(i)
-            wlist = set(self.wordList)
-            self.textEdit.clear()
-            for i in wlist:
-                self.textEdit.append(i)
-                print(i)
-            print('-----------')
+    #     if cmdVis:
+    #         print(f'prefix = {prefix}')
+    #         print(board)
+    #         self.board.spcPrint(connection)
+    #         #time.sleep(.15)
+    #         print('Found Words')
+    #         print('-----------')
+    #         # for i in self.wordList:
+    #         #     self.textEdit.setText(i)
+    #         #     print(i)
+    #         wlist = set(self.wordList)
+    #         self.textEdit.clear()
+    #         for i in wlist:
+    #             self.textEdit.append(i)
+    #             print(i)
+    #         print('-----------')
 
-        for i in chainList:
-            self.blist[i[0]][i[1]].setStyleSheet("background-color: #03A9F4")
+    #     for i in chainList:
+    #         self.blist[i[0]][i[1]].setStyleSheet("background-color: #03A9F4")
 
-        if cmdVis and connection == None:
-            connection = [False for i in range(42)]
+    #     if cmdVis and connection == None:
+    #         connection = [False for i in range(42)]
 
-        board = copy.deepcopy(board)
+    #     board = copy.deepcopy(board)
 
-        directions = [(1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1)]
+    #     directions = [(1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1)]
 
-        if trie.has_key(prefix):  # current word is valid:
-            self.wordList.append(prefix)
-            for i in chainList:
-                self.blist[i[0]][i[1]].setStyleSheet("background-color: #00cc00")
-            if cmdVis:
-                print(f'ADDED {prefix}')
-                print(chainList)
-            self.textEdit.append(f'--> {prefix}')
-            QtWidgets.qApp.processEvents()
-            time.sleep(.5)
-            #input()
+    #     if trie.has_key(prefix):  # current word is valid:
+    #         self.wordList.append(prefix)
+    #         for i in chainList:
+    #             self.blist[i[0]][i[1]].setStyleSheet("background-color: #00cc00")
+    #         if cmdVis:
+    #             print(f'ADDED {prefix}')
+    #             print(chainList)
+    #         self.textEdit.append(f'--> {prefix}')
+    #         QtWidgets.qApp.processEvents()
+    #         #time.sleep(.5)
+    #         #input()
 
-        QtWidgets.qApp.processEvents()
+    #     QtWidgets.qApp.processEvents()
 
-        for i in directions:
-            newStart = tuple(map(add, i, start))
-            x, y = newStart
+    #     for i in directions:
+    #         newStart = tuple(map(add, i, start))
+    #         x, y = newStart
+    #         if x >= 0 and x < self.size and y >= 0 and y < self.size:
+    #             newPrefix = prefix + board[x][y]
+    #             newChainList = copy.deepcopy(chainList)
+    #             newChainList.append((newStart[0],newStart[1]))
+    #             if trie.items(newPrefix) != []:  # i not already searched & i a valid space & valid prefix
+    #                 newBoard = copy.deepcopy(board)
+    #                 newBoard[x][y] = '-'
 
+    #                 newCon = copy.deepcopy(connection)
+    #                 if cmdVis:
+    #                     if i == (1, 0) or i == (-1, 0):
+    #                         newCon[13 * y + min(start[0], x)] = True
+    #                         print(f'start = {start}')
+    #                         print(f'next = {newStart}')
+    #                     if i == (0, 1) or i == (0, -1):
+    #                         newCon[13 * min(start[1], y) + 3 * (x + 1)] = True
+    #                         print(f'start = {start}')
+    #                         print(f'next = {newStart}')
+    #                     if i == (-1, 1) or i == (1, -1):
+    #                         newCon[13 * min(start[1], y) + 3 * max(start[0], x) + 1] = True
+    #                         print(f'start = {start}')
+    #                         print(f'next = {newStart}')
+    #                     if i == (1, 1) or i == (-1, -1):
+    #                         newCon[13 * min(start[1], y) + 3 * max(start[0], x) + 2] = True
+    #                         print(f'start = {start}')
+    #                         print(f'next = {newStart}')
+    #                 QtWidgets.qApp.processEvents()
 
-            if x >= 0 and x < self.size and y >= 0 and y < self.size:
-                #if cmdVis is True:
-                    #self.blist[x][y].setStyleSheet("background-color: #78909c")
-                newPrefix = prefix + board[x][y]
-                newChainList = copy.deepcopy(chainList)
-                newChainList.append((newStart[0],newStart[1]))
-                if trie.items(newPrefix) != []:  # i not already searched & i a valid space & valid prefix
-                    newBoard = copy.deepcopy(board)
-                    newBoard[x][y] = '-'
+    #                 self.dfsgui(newBoard, trie, newStart, newPrefix, newChainList, cmdVis, newCon)
+    #                 # newBoard, trie, newStart, newPrefix, cmdVis, newCon
+    #                 # dfs @i with modified bord & prefix
+    #                 # add word to list if it is at the end of the trie
 
-                    newCon = copy.deepcopy(connection)
-                    if cmdVis:
-                        if i == (1, 0) or i == (-1, 0):
-                            newCon[13 * y + min(start[0], x)] = True
-                            print(f'start = {start}')
-                            print(f'next = {newStart}')
-                        if i == (0, 1) or i == (0, -1):
-                            newCon[13 * min(start[1], y) + 3 * (x + 1)] = True
-                            print(f'start = {start}')
-                            print(f'next = {newStart}')
-                        if i == (-1, 1) or i == (1, -1):
-                            newCon[13 * min(start[1], y) + 3 * max(start[0], x) + 1] = True
-                            print(f'start = {start}')
-                            print(f'next = {newStart}')
-                        if i == (1, 1) or i == (-1, -1):
-                            newCon[13 * min(start[1], y) + 3 * max(start[0], x) + 2] = True
-                            print(f'start = {start}')
-                            print(f'next = {newStart}')
-                    QtWidgets.qApp.processEvents()
-
-                    self.dfsgui(newBoard, trie, newStart, newPrefix, newChainList, cmdVis, newCon)
-                    # newBoard, trie, newStart, newPrefix, cmdVis, newCon
-                    # dfs @i with modified bord & prefix
-                    # add word to list if it is at the end of the trie
-
-        self.blist[start[0]][start[1]].setStyleSheet("background-color: None")
-        return
+    #     self.blist[start[0]][start[1]].setStyleSheet("background-color: None")
+    #     return
 
 
 if __name__ == "__main__":
@@ -458,4 +439,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-

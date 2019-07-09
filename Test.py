@@ -1,25 +1,23 @@
-import Board as b
+from Board import *
 import copy
-from GUI import Boggle
+from NEWGUI import BOGGLE
 from PyQt5 import QtWidgets
 import sys
 from Words import Words
 
-board = b.Board()
-print(board)
-board.spcPrint()
-words = Words()
-stringTrie = words.trie(1)
+
 
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
-ui = Boggle()
+ui = BOGGLE()
 ui.setupUi(MainWindow)
 MainWindow.show()
 sys.exit(app.exec_())
 
+print('hi')
+Board.dfs(BOGGLE.board, BOGGLE.trie, start = (1, 1), prefix = '', cmdVis = False, connection = None, guiVis = True, gui = BOGGLE, chainList = [(1,1)])
 
-board.letters[0][0]
+
 
 
 startChar = board.letters[1][1]
