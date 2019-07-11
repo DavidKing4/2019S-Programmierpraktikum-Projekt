@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'MainTest.ui'
+#
+# Created by: PyQt5 UI code generator 5.12
+#
+# WARNING! All changes made in this file will be lost!
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from NEWGUI import BOGGLE
 from Mode1 import Ui_Form
@@ -53,27 +61,15 @@ class Ui_MainWindow(object):
         self.verticalSlider_2.rangeChanged['int','int'].connect(self.lcdNumber_2.display)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton.setText(_translate("MainWindow", "start"))
+        self.pushButton.clicked.connect(self.open)
+
         self.label.setText(_translate("MainWindow", "Grid"))
         self.label_2.setText(_translate("MainWindow", "Level"))
-
-
-
-
-
-
-
-
-
-
-
-
-
-        """ UI BORDER -------------------------------------------------------------------"""
-        self.pushButton.clicked.connect(self.open)
 
     def open(self):
         dal = self.verticalSlider.sliderPosition()
