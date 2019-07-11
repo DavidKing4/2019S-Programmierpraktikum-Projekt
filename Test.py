@@ -47,8 +47,7 @@ board.letters
 
 
 
-
-
+b = Board()
 
 
 

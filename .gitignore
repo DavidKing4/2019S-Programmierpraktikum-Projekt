@@ -128,3 +128,7 @@ dmypy.json
 .pyre/
 
 /qtpie.py
+/GUI-2.py
+
+/TempMode1.py
+/GUI-2.ui

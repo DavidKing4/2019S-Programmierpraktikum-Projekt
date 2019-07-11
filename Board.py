@@ -117,12 +117,12 @@ class Board:
 
 
     # depth first search
-    def dfs(self, board, trie, start = (0, 0), prefix = '', cmdVis = False, connection = None, guiVis = False, gui = False, chainList = []): #big boy function
-
+    def dfs(self, board, trie, start = (0, 0), prefix = '', cmdVis = False, connection = None, guiVis = False, gui = False, chainList = [], delay = 0): #big boy function
+        d = delay
         if cmdVis:
             print(f'prefix = {prefix}')
             self.spcPrint(connection)
-            time.sleep(.15)
+            #time.sleep(delay)
             print('Found Words')
             print('-----------')
             for i in self.words:
@@ -134,7 +134,16 @@ class Board:
 
         if guiVis:
             for i in chainList:
-                gui.blist[i[0]][i[1]].setStyleSheet("background-color: #03A9F4")
+                gui.blist[i[0]][i[1]].setStyleSheet(" color: #303030;\n"
+                                         "\n"
+                                         "background: #74b9ff ;\n"
+                                         "border: 2px solid #303030;\n"
+                                         "    border-radius: 20px;\n"
+                                         "    border-style: outset;\n"
+                                         "\n"
+                                         "Text-align:center;")
+                time.sleep(d)
+
             QtWidgets.qApp.processEvents()
 
         board = copy.deepcopy(board)
@@ -142,13 +151,25 @@ class Board:
         directions = [(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1),(0,1)]
 
         if trie.has_key(prefix):    # current word is valid:
+
             self.words.append(prefix)
+            time.sleep(d)
             if cmdVis:
                 print(f'ADDED {prefix}')
             if guiVis:
                 for i in chainList:
-                    gui.blist[i[0]][i[1]].setStyleSheet("background-color: #00cc00")
+
+                    gui.blist[i[0]][i[1]].setStyleSheet(" color: #303030;\n"
+                                         "\n"
+                                         "background: #55efc4 ;\n"
+                                         "border: 2px solid #303030;\n"
+                                         "    border-radius: 20px;\n"
+                                         "    border-style: outset;\n"
+                                         "\n"
+                                         "Text-align:center;")
+                    time.sleep(d)
                 gui.textEdit.append(f'--> {prefix}')
+                time.sleep(d)
                 QtWidgets.qApp.processEvents()
 
         for i in directions:
@@ -186,8 +207,17 @@ class Board:
 
                     QtWidgets.qApp.processEvents()
                             
-                    self.dfs(newBoard, trie, newStart, newPrefix, cmdVis, newCon, guiVis, gui, newChainList)
+                    self.dfs(newBoard, trie, newStart, newPrefix, cmdVis, newCon, guiVis, gui, newChainList, d)
                     # dfs @i with modified bord & prefix
                     # add word to list if it is at the end of the trie
-        gui.blist[start[0]][start[1]].setStyleSheet("background-color: None")
+
+        gui.blist[start[0]][start[1]].setStyleSheet(" color: #303030;\n"
+                                         "\n"
+                                         "background: #e87461 ;\n"
+                                         "border: 2px solid #303030;\n"
+                                         "    border-radius: 20px;\n"
+                                         "    border-style: outset;\n"
+                                         "\n"
+                                         "Text-align:center")
+        time.sleep(d)
         return
