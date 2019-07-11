@@ -1,22 +1,49 @@
 from Board import *
 from Words import Words
+import sys
+import time
+import threading
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PyQt5.QtWidgets import QApplication
 
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(700, 515)
         Form.setStyleSheet("background: #f2f1ef")
+        self.form = Form
         self.gridLayout_2 = QtWidgets.QGridLayout(Form)
         self.gridLayout_2.setObjectName("gridLayout_2")
+
+        # Start
+        self.pushButton_3 = QtWidgets.QPushButton(Form)
+        self.pushButton_3.setMaximumSize(QtCore.QSize(70, 28))
+        font = QtGui.QFont()
+        font.setFamily("Cambria Math")
+        font.setPointSize(16)
+        self.pushButton_3.setFont(font)
+        self.pushButton_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_3.setStyleSheet(" color: #303030;\n"
+                                        "\n"
+                                        "background: #00b894 ;\n"
+                                        "border: 2px solid #303030;\n"
+                                        "    border-radius: 20px;\n"
+                                        "    border-style: outset;\n"
+                                        "\n"
+                                        "Text-align:center")
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.gridLayout_2.addWidget(self.pushButton_3, 2, 4, 1, 1)
+
+        # Stop
         self.pushButton_2 = QtWidgets.QPushButton(Form)
         self.pushButton_2.setMaximumSize(QtCore.QSize(70, 28))
         font = QtGui.QFont()
         font.setFamily("Cambria Math")
         font.setPointSize(16)
         self.pushButton_2.setFont(font)
+        self.pushButton_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_2.setStyleSheet(" color: #303030;\n"
                                         "\n"
                                         "background: #fdcb6e ;\n"
@@ -40,12 +67,15 @@ class Ui_Form(object):
                                        "Text-align:center")
         self.lcdNumber_2.setObjectName("lcdNumber_2")
         self.gridLayout_2.addWidget(self.lcdNumber_2, 2, 1, 1, 1)
+
+        # Exit
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setMaximumSize(QtCore.QSize(70, 28))
         font = QtGui.QFont()
         font.setFamily("Cambria Math")
         font.setPointSize(16)
         self.pushButton.setFont(font)
+        self.pushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton.setStyleSheet(" color: #303030;\n"
                                       "\n"
                                       "background:#d63031 ;\n"
@@ -100,6 +130,8 @@ class Ui_Form(object):
                                        "")
         self.progressBar.setProperty("value", 00)
         self.progressBar.setObjectName("progressBar")
+
+        # GRID
         self.gridLayout_2.addWidget(self.progressBar, 1, 0, 1, 6)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
@@ -558,22 +590,8 @@ class Ui_Form(object):
                                        "Text-align:center")
         self.lcdNumber_3.setObjectName("lcdNumber_3")
         self.gridLayout_2.addWidget(self.lcdNumber_3, 2, 3, 1, 1)
-        self.pushButton_3 = QtWidgets.QPushButton(Form)
-        self.pushButton_3.setMaximumSize(QtCore.QSize(70, 28))
-        font = QtGui.QFont()
-        font.setFamily("Cambria Math")
-        font.setPointSize(16)
-        self.pushButton_3.setFont(font)
-        self.pushButton_3.setStyleSheet(" color: #303030;\n"
-                                        "\n"
-                                        "background: #00b894 ;\n"
-                                        "border: 2px solid #303030;\n"
-                                        "    border-radius: 20px;\n"
-                                        "    border-style: outset;\n"
-                                        "\n"
-                                        "Text-align:center")
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.gridLayout_2.addWidget(self.pushButton_3, 2, 4, 1, 1)
+
+
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -592,7 +610,9 @@ class Ui_Form(object):
         self.wordList = []
 
 
+
     def retranslateUi(self, Form):
+
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.pushButton.setText(_translate("Form", "Exit"))
@@ -638,6 +658,12 @@ class Ui_Form(object):
         self.pushButton_32.clicked.connect(lambda: self.dfsguisingle((3, 2)))
         self.pushButton_33.clicked.connect(lambda: self.dfsguisingle((3, 3)))
 
+        # Break Buttons
+        self.process = QtCore.QProcess()
+        self.pushButton.clicked.connect(self.broke)
+        self.pushButton_2.clicked.connect(self.broke)
+
+
         """ Button List """
         self.blist = [[self.pushButton_00, self.pushButton_01, self.pushButton_02, self.pushButton_03],
                       [self.pushButton_10, self.pushButton_11, self.pushButton_12, self.pushButton_13],
@@ -661,7 +687,25 @@ class Ui_Form(object):
 
     """ BUTTON FUNCTIONS """
 
+    def swatch(self):
+        now = time.time()
+        self.lcdNumber.display(time.time()-now)
+
+    # Break functions
+    def broke(self):
+        sender = self.form.sender()
+        if sender.text() == "Exit":
+            self.form.close()
+        elif sender.text() == "Stop":
+
+            QtWidgets.qApp.processEvents()
+
+
+
     def dfsguisingle(self, bs, delay = 0):
+        self.board.words = []    # Whenever you press start the list and points will be resetted
+        self.textEdit.clear()    # Text edit must be cleared
+
         stringTrie = self.trie
         startChar = self.board.letters[bs[0]][bs[1]]
         temp = copy.deepcopy(self.board.letters)
@@ -689,21 +733,20 @@ class Ui_Form(object):
         count = 0
         limit = 100
         n = 4
-        # s = 0
-        # m = 0
-        # h = 0
+        self.board.words = []    # Whenever you press start the list and points will be resetted
+        self.textEdit.clear()    # clear Textedit
 
-        # time = "{0}:{1}:{2}".format(h, m, s)
-        #
-        # self.lcdNumber.setDigitCount(len(time))
-        # self.lcdNumber.display(time)
-        # self.timer.start(1000)
+
+        now = time.time()
+        # t = threading.Thread(target= self.swatch, name='th1')
+        # t.start()
+
 
 
         stringTrie = self.trie
         for i in range(n):
             for j in range(n):
-
+                self.lcdNumber.display(round(time.time()-now,2))
                 QtWidgets.qApp.processEvents()
                 startChar = self.board.letters[i][j]
                 temp = copy.deepcopy(self.board.letters)

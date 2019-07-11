@@ -46,8 +46,8 @@ board.letters
 
 
 
-
-b = Board()
+b=Board()
+Board.dfs(b, trie=w.trie, board= b.letters )
 
 
 
@@ -72,7 +72,7 @@ board.letters[1][1]
 
 
 
-w.trie(1)
+w.trie()
 
 
 

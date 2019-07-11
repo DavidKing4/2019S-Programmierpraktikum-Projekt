@@ -14,7 +14,7 @@ print(board)
 words = Words('words_new.txt')
 
 # neue trie
-stringTrie = words.trie(1)
+stringTrie = words.trie()
 
 t = time.time()
 
