@@ -109,17 +109,24 @@ i_list("i", a)
 from operator import add
 a = [(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1),(0,1)]
 
-b = (3,2)
+abba =[]
+
+abba.append(a)
+abba[1]
+b = (12,5)
 
 c= []
 for i in a:
-    c.append(tuple(map(add, i, b)))
+    candi = tuple(map(add, i, b))
+    if 12 > candi[0] >= 0 and 12 > candi[1] >= 0:
+        c.append(candi)
 
 
 a
 
 a[-1:]
 
+c
 
-
-
+wan = "araba"
+wan[:-1]

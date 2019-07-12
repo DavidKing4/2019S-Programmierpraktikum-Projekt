@@ -1,6 +1,9 @@
 from Board import *
 from Words import *
+import Mode1 as m1
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QShortcut
+from PyQt5.QtGui import QKeySequence
 from OutFunc import *
 from operator import add
 
@@ -14,6 +17,9 @@ class Ui_Formiki(object):
         Formiki.setObjectName("Formiki")
         Formiki.resize(700, 521)
         Formiki.setStyleSheet("background: #f2f1ef")
+
+        
+        
         self.gridLayout_2 = QtWidgets.QGridLayout(Formiki)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.lineEdit = QtWidgets.QLineEdit(Formiki)
@@ -586,8 +592,15 @@ class Ui_Formiki(object):
 "Text-align:center")
         self.pushButton_2.setObjectName("pushButton_2")
         self.horizontalLayout_3.addWidget(self.pushButton_2)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_3.addItem(spacerItem1)
+        self.label_4 = QtWidgets.QLabel(Formiki)
+        self.label_4.setAlignment(QtCore.Qt.AlignCenter)
+        font = QtGui.QFont()
+        font.setFamily("Cambria")
+        font.setPointSize(18)
+        self.label_4.setFont(font)
+        self.label_4.setText("")
+        self.label_4.setObjectName("label_4")
+        self.horizontalLayout_3.addWidget(self.label_4)
         self.pushButton_4 = QtWidgets.QPushButton(Formiki)
         self.pushButton_4.setMinimumSize(QtCore.QSize(70, 28))
         self.pushButton_4.setMaximumSize(QtCore.QSize(70, 28))
@@ -4413,12 +4426,14 @@ class Ui_Formiki(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, board=None, size=12, trie=None, words=None):
+    def __init__(self, board=None, size=10, trie=None, words=None):
         self.n = size
         self.w = ""
+        self.wordlist = []
         self.chain = []
         self.directions = [(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1),(0,1)]
-        self.hood = []
+        self.paths = []
+        
 
         """ COLORS """
         self.blue = " color: #303030;\n""\n""background: #74b9ff ;\n""border: 2px solid #303030;\n""    border-radius: 20px;\n""    border-style: outset;\n""\n""Text-align:center;"
@@ -4427,7 +4442,13 @@ class Ui_Formiki(object):
 
         self.green = " color: #303030;\n""\n""background: #55efc4 ;\n""border: 2px solid #303030;\n""    border-radius: 20px;\n""    border-style: outset;\n""\n""Text-align:center;"
 
-
+        self.red = " color: #303030;\n""\n""background: #d63031 ;\n""border: 2px solid #303030;\n""    border-radius: 20px;\n""    border-style: outset;\n""\n""Text-align:center;"
+        
+        """ SHORTCUT-KEY BINDINGS """
+        self.shortcut = QtWidgets.QShortcut(QtGui.QKeySequence(QtCore.Qt.Key_Escape), Formiki)
+        
+        
+        self
         if board is None:
             self.board = Board(n=self.n)
         else:
@@ -4811,6 +4832,13 @@ class Ui_Formiki(object):
         self.pushButton_119.clicked[bool].connect(self.vstimesingle)
         self.pushButton_11110.clicked[bool].connect(self.vstimesingle)
         self.pushButton_11111.clicked[bool].connect(self.vstimesingle)
+        
+        # Break Buttons
+        
+        self.pushButton.clicked.connect(self.brokeiki)
+        
+        # Shortcuts
+        self.shortcut.activated.connect(self.cleartable)
 
         """ Button List """
         self.blist = [[self.pushButton_00, self.pushButton_01, self.pushButton_02, self.pushButton_03, self.pushButton_04,self.pushButton_05, self.pushButton_06, self.pushButton_07, self.pushButton_08, self.pushButton_09,self.pushButton_010, self.pushButton_011],
@@ -4834,29 +4862,96 @@ class Ui_Formiki(object):
 
     """ BUTTON FUNCTIONS """
 
+    def brokeiki(self):
+        sender = Formiki.sender()
+        if sender.text() == "Exit":
+            Formiki.close()
 
-
-
+    def cleartable(self):
+        for j in self.blist:
+            for k in j:
+                k.setEnabled(True)
+        for i in self.chain:
+            self.blist[i[0]][i[1]].setStyleSheet(self.defa)
+            self.blist[i[0]][i[1]].setChecked(False)
+        self.w = ""
+        self.lineEdit.setText(self.w)
+        self.chain = []
+        
 
     def vstimesingle(self, pressed ):
         source = Formiki.sender()
 
 
         if pressed:
+            self.label_4.setText("")
             QtWidgets.qApp.processEvents()
             pos = i_list(source, self.blist)
             self.chain.append(pos)    # Add position to the chain as tuple
-            source.setStyleSheet(self.blue)
+            for i in self.chain:
+                 self.blist[i[0]][i[1]].setStyleSheet(self.blue)
+            self.w += source.text()   # Expand the word with the new letter
+            self.lineEdit.setText(self.w)  # show the word on line edit
+            for j in self.blist:
+                for k in j:
+                    k.setEnabled(True)
+            for i in self.chain[:-1]:
+                self.blist[i[0]][i[1]].setEnabled(False)
+                
+
+            """ NEIGHBOR OR NOT SITUATION """
             if len(self.chain) > 1:
-                last = self.chain[-2]
-                hood = []
-                for i in self.directions:
-                    QtWidgets.qApp.processEvents()
-                    hood.append(tuple(map(add, i, last)))
-                if pos not in hood:
-                    for i in self.chain[0:(len(self.chain)-1)]:
-                        self.blist[i[0]][i[1]].setStyleSheet(self.defa)
-                        self.chain = self.chain[-1:]
+                    last = self.chain[-2]
+                    hood = []
+                    for i in self.directions:
+                            QtWidgets.qApp.processEvents()
+                            candi = tuple(map(add, i, last))
+                            if self.n > candi[0] >= 0 and self.n > candi[1] >= 0:
+                                    hood.append(candi)
+                    if pos not in hood:
+                            for i in self.chain[0:(len(self.chain) - 1)]:
+                                    QtWidgets.qApp.processEvents()
+                                    self.blist[i[0]][i[1]].setStyleSheet(self.defa)
+                                    self.blist[i[0]][i[1]].setChecked(False)
+                                    self.chain = self.chain[-1:]  # Chain will be reduced to the last element
+                            self.lineEdit.setText(self.w[-1])  # Line edit will be reduced to last letter
+                            self.w = self.w[-1]  # The word will be reduced to last letter
+
+            """ VALID WORD SITUATION """
+            if len(self.w) >= 3 and self.w in self.words.list:
+                
+                # Repetition prevention # self.chain in self.paths or
+                if self.w in self.wordlist:
+                    for i in self.chain:
+                        self.blist[i[0]][i[1]].setStyleSheet(self.red)
+                    self.label_4.setText("Already in the list!")
+                else:
+                    self.wordlist.append(self.w)
+                    # for i in self.wordlist:
+                    self.AItextEdit_2.append(self.w)
+                    self.paths.append(self.chain)
+                    
+                    for i in self.chain:
+                        self.blist[i[0]][i[1]].setStyleSheet(self.green)
+                    points = 0
+                    polist = list(self.wordlist)
+                    
+                    # Points
+                    for po in polist:
+                            if len(po) <= 4:
+                                    points += 1
+                            elif len(po) == 5:
+                                    points += 2
+                            elif len(po) == 6:
+                                    points += 3
+                            elif len(po) == 7:
+                                    points += 5
+                            elif len(po) > 7:
+                                    points += 11
+                    self.lcdNumber_3.display(points)
+                    self.lcdNumber_2.display(len(self.wordlist))
+
+
 
         # # a = ps[0]
         # # b = ps[1]
@@ -4913,15 +5008,19 @@ class Ui_Formiki(object):
         # #
         # #
         else:
-            source.setStyleSheet(" color: #303030;\n"
-                                               "\n"
-                                               "background: #e87461 ;\n"
-                                               "border: 2px solid #303030;\n"
-                                               "    border-radius: 20px;\n"
-                                               "    border-style: outset;\n"
-                                               "\n"
-                                               "Text-align:center")
-        # self.lineEdit.setText(self.w)
+            QtWidgets.qApp.processEvents()
+            source.setStyleSheet(self.defa)
+
+            """ DESELECTION SITUATION """
+            self.w = self.w[:-1]
+            self.chain = self.chain[:-1]
+            self.lineEdit.setText(self.w)
+            for j in self.blist:
+                for k in j:
+                    k.setEnabled(True)
+            for i in self.chain[:-1]:
+                self.blist[i[0]][i[1]].setEnabled(False)
+        
 
 
     def vstimestart(self):
