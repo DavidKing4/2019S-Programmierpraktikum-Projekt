@@ -80,11 +80,11 @@ w.trie()
 
 
 
-
-
-
-
-
-
-
+import numpy as np
+from numpy import reshape
+lid = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","r","s","t"]
+a = []
+for i in range(0,len(lid), 4):
+    a.append(lid[i:i+4])
+a
 #board[0][0]

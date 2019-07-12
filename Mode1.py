@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import QApplication, QDesktopWidget
 
 class Ui_Form(object):
     def setupUi(self, Form):
+
         Form.setObjectName("Form")
         Form.resize(700, 515)
         Form.setStyleSheet("background: #f2f1ef")
@@ -4210,12 +4211,14 @@ class Ui_Form(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, board=None, size=4, trie=None, words=None):
+    def __init__(self, board=None, size=10, trie=None, words=None):
         self.n = size
-        self.form = Form
+        #self.form = Form
+
         """ Board """
         if board == None:
             self.board = Board(n= self.n)
+
         if words == None:
             self.words = Words()
         if trie == None:
@@ -4225,10 +4228,10 @@ class Ui_Form(object):
             b=515
             Form.resize(a + self.n*(2*9), b+self.n*(2*16))
         self.wordList = []
-        qr = self.form.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.form.move(qr.topLeft())
+        # qr = Form.frameGeometry()
+        # cp = QDesktopWidget().availableGeometry().center()
+        # qr.moveCenter(cp)
+        # Form.move(qr.topLeft())
 
 
 
@@ -4668,9 +4671,9 @@ class Ui_Form(object):
 
     # Break functions
     def broke(self):
-        sender = self.form.sender()
+        sender = Form.sender()
         if sender.text() == "Exit":
-            self.form.close()
+            Form.close()
         elif sender.text() == "Stop":
 
             QtWidgets.qApp.processEvents()
