@@ -1,5 +1,6 @@
 from Board import *
 from Words import Words
+import math
 import sys
 import time
 import threading
@@ -558,6 +559,7 @@ class Ui_Form(object):
         font = QtGui.QFont()
         font.setFamily("Cambria")
         font.setPointSize(12)
+        self.textEdit.setReadOnly(True)
         self.textEdit.setFont(font)
         self.textEdit.setStyleSheet(" color: #303030;\n"
                                         "\n"
@@ -4211,14 +4213,13 @@ class Ui_Form(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, board=None, size=10, trie=None, words=None):
+    def __init__(self, board = None, size = 6, trie = None, words = None):
         self.n = size
         #self.form = Form
 
         """ Board """
         if board == None:
-            self.board = Board(n= self.n)
-
+            self.board = Board(n = self.n)
         if words == None:
             self.words = Words()
         if trie == None:
@@ -4228,6 +4229,7 @@ class Ui_Form(object):
             b=515
             Form.resize(a + self.n*(2*9), b+self.n*(2*16))
         self.wordList = []
+        self.stop = False
         # qr = Form.frameGeometry()
         # cp = QDesktopWidget().availableGeometry().center()
         # qr.moveCenter(cp)
@@ -4675,12 +4677,13 @@ class Ui_Form(object):
         if sender.text() == "Exit":
             Form.close()
         elif sender.text() == "Stop":
-
+            self.stop = True
             QtWidgets.qApp.processEvents()
 
 
 
     def dfsguisingle(self, bs, delay = 0):
+        self.stop = False
         self.board.words = []    # Whenever you press start the list and points will be resetted
         self.textEdit.clear()    # Text edit must be cleared
 
@@ -4711,8 +4714,9 @@ class Ui_Form(object):
         count = 0
         limit = 100
         n = self.n
-        self.board.words = []    # Whenever you press start the list and points will be resetted
+        self.board.words = []    # Whenever you press start the list and points will be reset
         self.textEdit.clear()    # clear Textedit
+        self.stop = False
 
 
         now = time.time()
@@ -4732,8 +4736,13 @@ class Ui_Form(object):
 
                 Board.dfs(self.board, temp, stringTrie, (i,j), startChar, False, None, True, self, [(i,j)], delay=0)
 
+                if self.stop:
+                    self.progressBar.setValue(0)
+                    self.lcdNumber.display(0)
+                    break
+
                 count += 100 / n**2
-                self.progressBar.setValue(count)
+                self.progressBar.setValue(math.ceil(count))
                 # self.lcdNumber.display(count)    # It must work as a timer
 
                 points = 0
@@ -4751,9 +4760,8 @@ class Ui_Form(object):
                         points += 11
                 self.lcdNumber_3.display(points)
                 self.lcdNumber_2.display(len(self.board.words))
-
-
-
+            if self.stop:
+                break
 
 
 
