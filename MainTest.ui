@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>480</height>
+    <width>628</width>
+    <height>482</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,6 +25,29 @@
     </property>
     <property name="text">
      <string>start</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>220</y>
+      <width>241</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Example 4x4 -&gt; abcdefghjklm</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_3">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>330</y>
+      <width>64</width>
+      <height>23</height>
+     </rect>
     </property>
    </widget>
    <widget class="QWidget" name="">
@@ -45,8 +68,11 @@
      </item>
      <item row="1" column="0">
       <widget class="QSlider" name="verticalSlider">
+       <property name="minimum">
+        <number>4</number>
+       </property>
        <property name="maximum">
-        <number>10</number>
+        <number>12</number>
        </property>
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -55,6 +81,9 @@
      </item>
      <item row="1" column="1">
       <widget class="QSlider" name="verticalSlider_2">
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>10</number>
        </property>
@@ -85,7 +114,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>640</width>
+     <width>628</width>
      <height>26</height>
     </rect>
    </property>
@@ -101,28 +130,28 @@
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>270</x>
-     <y>118</y>
+     <x>273</x>
+     <y>137</y>
     </hint>
     <hint type="destinationlabel">
-     <x>295</x>
-     <y>68</y>
+     <x>290</x>
+     <y>75</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>verticalSlider_2</sender>
-   <signal>rangeChanged(int,int)</signal>
+   <signal>sliderMoved(int)</signal>
    <receiver>lcdNumber_2</receiver>
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>340</x>
-     <y>133</y>
+     <x>342</x>
+     <y>115</y>
     </hint>
     <hint type="destinationlabel">
-     <x>369</x>
-     <y>69</y>
+     <x>360</x>
+     <y>71</y>
     </hint>
    </hints>
   </connection>

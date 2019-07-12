@@ -88,3 +88,38 @@ for i in range(0,len(lid), 4):
     a.append(lid[i:i+4])
 a
 #board[0][0]
+
+def i_list(el, li):
+    out = None
+    for i in range(len(li)-1):
+        for j in range(len(li)-1):
+            if el == li[i][j]:
+                out= (i, j)
+    return out
+lid[-2]
+i_list("i", a)
+
+
+
+
+
+
+
+
+from operator import add
+a = [(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1),(0,1)]
+
+b = (3,2)
+
+c= []
+for i in a:
+    c.append(tuple(map(add, i, b)))
+
+
+a
+
+a[-1:]
+
+
+
+

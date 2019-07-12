@@ -866,7 +866,7 @@ class Ui_Form(object):
         self.pushButton_14.setAutoDefault(False)
         self.pushButton_14.setDefault(False)
         self.pushButton_14.setFlat(True)
-        self.pushButton_14.setObjectName("pushButton_04")
+        self.pushButton_14.setObjectName("pushButton_14")
         self.pushButton_14.hide()
         self.gridLayout.addWidget(self.pushButton_14, 1, 4, 1, 1)
 
@@ -1090,7 +1090,7 @@ class Ui_Form(object):
         self.pushButton_24.setAutoDefault(False)
         self.pushButton_24.setDefault(False)
         self.pushButton_24.setFlat(True)
-        self.pushButton_24.setObjectName("pushButton_04")
+        self.pushButton_24.setObjectName("pushButton_24")
         self.pushButton_24.hide()
         self.gridLayout.addWidget(self.pushButton_24, 2, 4, 1, 1)
 
@@ -1314,7 +1314,7 @@ class Ui_Form(object):
         self.pushButton_34.setAutoDefault(False)
         self.pushButton_34.setDefault(False)
         self.pushButton_34.setFlat(True)
-        self.pushButton_34.setObjectName("pushButton_04")
+        self.pushButton_34.setObjectName("pushButton_34")
         self.pushButton_34.hide()
         self.gridLayout.addWidget(self.pushButton_34, 3, 4, 1, 1)
 
@@ -1538,7 +1538,7 @@ class Ui_Form(object):
         self.pushButton_40.setAutoDefault(False)
         self.pushButton_40.setDefault(False)
         self.pushButton_40.setFlat(True)
-        self.pushButton_40.setObjectName("pushButton_04")
+        self.pushButton_40.setObjectName("pushButton_40")
         self.pushButton_40.hide()
         self.gridLayout.addWidget(self.pushButton_40, 4, 0, 1, 1)
 
@@ -1566,7 +1566,7 @@ class Ui_Form(object):
         self.pushButton_41.setAutoDefault(False)
         self.pushButton_41.setDefault(False)
         self.pushButton_41.setFlat(True)
-        self.pushButton_41.setObjectName("pushButton_04")
+        self.pushButton_41.setObjectName("pushButton_41")
         self.pushButton_41.hide()
         self.gridLayout.addWidget(self.pushButton_41, 4, 1, 1, 1)
 
@@ -1594,7 +1594,7 @@ class Ui_Form(object):
         self.pushButton_42.setAutoDefault(False)
         self.pushButton_42.setDefault(False)
         self.pushButton_42.setFlat(True)
-        self.pushButton_42.setObjectName("pushButton_04")
+        self.pushButton_42.setObjectName("pushButton_42")
         self.pushButton_42.hide()
         self.gridLayout.addWidget(self.pushButton_42, 4, 2, 1, 1)
 
@@ -1622,7 +1622,7 @@ class Ui_Form(object):
         self.pushButton_43.setAutoDefault(False)
         self.pushButton_43.setDefault(False)
         self.pushButton_43.setFlat(True)
-        self.pushButton_43.setObjectName("pushButton_04")
+        self.pushButton_43.setObjectName("pushButton_43")
         self.pushButton_43.hide()
         self.gridLayout.addWidget(self.pushButton_43, 4, 3, 1, 1)
 
@@ -1650,7 +1650,7 @@ class Ui_Form(object):
         self.pushButton_44.setAutoDefault(False)
         self.pushButton_44.setDefault(False)
         self.pushButton_44.setFlat(True)
-        self.pushButton_44.setObjectName("pushButton_04")
+        self.pushButton_44.setObjectName("pushButton_44")
         self.pushButton_44.hide()
         self.gridLayout.addWidget(self.pushButton_44, 4, 4, 1, 1)
 
@@ -1875,7 +1875,7 @@ class Ui_Form(object):
         self.pushButton_50.setAutoDefault(False)
         self.pushButton_50.setDefault(False)
         self.pushButton_50.setFlat(True)
-        self.pushButton_50.setObjectName("pushButton_04")
+        self.pushButton_50.setObjectName("pushButton_50")
         self.pushButton_50.hide()
         self.gridLayout.addWidget(self.pushButton_50, 5, 0, 1, 1)
 
@@ -1903,7 +1903,7 @@ class Ui_Form(object):
         self.pushButton_51.setAutoDefault(False)
         self.pushButton_51.setDefault(False)
         self.pushButton_51.setFlat(True)
-        self.pushButton_51.setObjectName("pushButton_04")
+        self.pushButton_51.setObjectName("pushButton_51")
         self.pushButton_51.hide()
         self.gridLayout.addWidget(self.pushButton_51, 5, 1, 1, 1)
 
@@ -1931,7 +1931,7 @@ class Ui_Form(object):
         self.pushButton_52.setAutoDefault(False)
         self.pushButton_52.setDefault(False)
         self.pushButton_52.setFlat(True)
-        self.pushButton_52.setObjectName("pushButton_04")
+        self.pushButton_52.setObjectName("pushButton_52")
         self.pushButton_52.hide()
         self.gridLayout.addWidget(self.pushButton_52, 5, 2, 1, 1)
 
@@ -1959,7 +1959,7 @@ class Ui_Form(object):
         self.pushButton_53.setAutoDefault(False)
         self.pushButton_53.setDefault(False)
         self.pushButton_53.setFlat(True)
-        self.pushButton_53.setObjectName("pushButton_04")
+        self.pushButton_53.setObjectName("pushButton_53")
         self.pushButton_53.hide()
         self.gridLayout.addWidget(self.pushButton_53, 5, 3, 1, 1)
 
@@ -1987,7 +1987,7 @@ class Ui_Form(object):
         self.pushButton_54.setAutoDefault(False)
         self.pushButton_54.setDefault(False)
         self.pushButton_54.setFlat(True)
-        self.pushButton_54.setObjectName("pushButton_04")
+        self.pushButton_54.setObjectName("pushButton_54")
         self.pushButton_54.hide()
         self.gridLayout.addWidget(self.pushButton_54, 5, 4, 1, 1)
 
@@ -2211,7 +2211,7 @@ class Ui_Form(object):
         self.pushButton_60.setAutoDefault(False)
         self.pushButton_60.setDefault(False)
         self.pushButton_60.setFlat(True)
-        self.pushButton_60.setObjectName("pushButton_04")
+        self.pushButton_60.setObjectName("pushButton_60")
         self.pushButton_60.hide()
         self.gridLayout.addWidget(self.pushButton_60, 6, 0, 1, 1)
 
@@ -2239,7 +2239,7 @@ class Ui_Form(object):
         self.pushButton_61.setAutoDefault(False)
         self.pushButton_61.setDefault(False)
         self.pushButton_61.setFlat(True)
-        self.pushButton_61.setObjectName("pushButton_04")
+        self.pushButton_61.setObjectName("pushButton_61")
         self.pushButton_61.hide()
         self.gridLayout.addWidget(self.pushButton_61, 6, 1, 1, 1)
 
@@ -2267,7 +2267,7 @@ class Ui_Form(object):
         self.pushButton_62.setAutoDefault(False)
         self.pushButton_62.setDefault(False)
         self.pushButton_62.setFlat(True)
-        self.pushButton_62.setObjectName("pushButton_04")
+        self.pushButton_62.setObjectName("pushButton_62")
         self.pushButton_62.hide()
         self.gridLayout.addWidget(self.pushButton_62, 6, 2, 1, 1)
 
@@ -2295,7 +2295,7 @@ class Ui_Form(object):
         self.pushButton_63.setAutoDefault(False)
         self.pushButton_63.setDefault(False)
         self.pushButton_63.setFlat(True)
-        self.pushButton_63.setObjectName("pushButton_04")
+        self.pushButton_63.setObjectName("pushButton_63")
         self.pushButton_63.hide()
         self.gridLayout.addWidget(self.pushButton_63, 6, 3, 1, 1)
 
@@ -2323,7 +2323,7 @@ class Ui_Form(object):
         self.pushButton_64.setAutoDefault(False)
         self.pushButton_64.setDefault(False)
         self.pushButton_64.setFlat(True)
-        self.pushButton_64.setObjectName("pushButton_04")
+        self.pushButton_64.setObjectName("pushButton_64")
         self.pushButton_64.hide()
         self.gridLayout.addWidget(self.pushButton_64, 6, 4, 1, 1)
 
@@ -2547,7 +2547,7 @@ class Ui_Form(object):
         self.pushButton_70.setAutoDefault(False)
         self.pushButton_70.setDefault(False)
         self.pushButton_70.setFlat(True)
-        self.pushButton_70.setObjectName("pushButton_04")
+        self.pushButton_70.setObjectName("pushButton_70")
         self.pushButton_70.hide()
         self.gridLayout.addWidget(self.pushButton_70, 7, 0, 1, 1)
 
@@ -2575,7 +2575,7 @@ class Ui_Form(object):
         self.pushButton_71.setAutoDefault(False)
         self.pushButton_71.setDefault(False)
         self.pushButton_71.setFlat(True)
-        self.pushButton_71.setObjectName("pushButton_04")
+        self.pushButton_71.setObjectName("pushButton_71")
         self.pushButton_71.hide()
         self.gridLayout.addWidget(self.pushButton_71, 7, 1, 1, 1)
 
@@ -2603,7 +2603,7 @@ class Ui_Form(object):
         self.pushButton_72.setAutoDefault(False)
         self.pushButton_72.setDefault(False)
         self.pushButton_72.setFlat(True)
-        self.pushButton_72.setObjectName("pushButton_04")
+        self.pushButton_72.setObjectName("pushButton_72")
         self.pushButton_72.hide()
         self.gridLayout.addWidget(self.pushButton_72, 7, 2, 1, 1)
 
@@ -2631,7 +2631,7 @@ class Ui_Form(object):
         self.pushButton_73.setAutoDefault(False)
         self.pushButton_73.setDefault(False)
         self.pushButton_73.setFlat(True)
-        self.pushButton_73.setObjectName("pushButton_04")
+        self.pushButton_73.setObjectName("pushButton_73")
         self.pushButton_73.hide()
         self.gridLayout.addWidget(self.pushButton_73, 7, 3, 1, 1)
 
@@ -2659,7 +2659,7 @@ class Ui_Form(object):
         self.pushButton_74.setAutoDefault(False)
         self.pushButton_74.setDefault(False)
         self.pushButton_74.setFlat(True)
-        self.pushButton_74.setObjectName("pushButton_04")
+        self.pushButton_74.setObjectName("pushButton_74")
         self.pushButton_74.hide()
         self.gridLayout.addWidget(self.pushButton_74, 7, 4, 1, 1)
 
@@ -2883,7 +2883,7 @@ class Ui_Form(object):
         self.pushButton_80.setAutoDefault(False)
         self.pushButton_80.setDefault(False)
         self.pushButton_80.setFlat(True)
-        self.pushButton_80.setObjectName("pushButton_04")
+        self.pushButton_80.setObjectName("pushButton_80")
         self.pushButton_80.hide()
         self.gridLayout.addWidget(self.pushButton_80, 8, 0, 1, 1)
 
@@ -2911,7 +2911,7 @@ class Ui_Form(object):
         self.pushButton_81.setAutoDefault(False)
         self.pushButton_81.setDefault(False)
         self.pushButton_81.setFlat(True)
-        self.pushButton_81.setObjectName("pushButton_04")
+        self.pushButton_81.setObjectName("pushButton_81")
         self.pushButton_81.hide()
         self.gridLayout.addWidget(self.pushButton_81, 8, 1, 1, 1)
 
@@ -2939,7 +2939,7 @@ class Ui_Form(object):
         self.pushButton_82.setAutoDefault(False)
         self.pushButton_82.setDefault(False)
         self.pushButton_82.setFlat(True)
-        self.pushButton_82.setObjectName("pushButton_04")
+        self.pushButton_82.setObjectName("pushButton_82")
         self.pushButton_82.hide()
         self.gridLayout.addWidget(self.pushButton_82, 8, 2, 1, 1)
 
@@ -2967,7 +2967,7 @@ class Ui_Form(object):
         self.pushButton_83.setAutoDefault(False)
         self.pushButton_83.setDefault(False)
         self.pushButton_83.setFlat(True)
-        self.pushButton_83.setObjectName("pushButton_04")
+        self.pushButton_83.setObjectName("pushButton_83")
         self.pushButton_83.hide()
         self.gridLayout.addWidget(self.pushButton_83, 8, 3, 1, 1)
 
@@ -2995,7 +2995,7 @@ class Ui_Form(object):
         self.pushButton_84.setAutoDefault(False)
         self.pushButton_84.setDefault(False)
         self.pushButton_84.setFlat(True)
-        self.pushButton_84.setObjectName("pushButton_04")
+        self.pushButton_84.setObjectName("pushButton_84")
         self.pushButton_84.hide()
         self.gridLayout.addWidget(self.pushButton_84, 8, 4, 1, 1)
 
@@ -3219,7 +3219,7 @@ class Ui_Form(object):
         self.pushButton_90.setAutoDefault(False)
         self.pushButton_90.setDefault(False)
         self.pushButton_90.setFlat(True)
-        self.pushButton_90.setObjectName("pushButton_04")
+        self.pushButton_90.setObjectName("pushButton_90")
         self.pushButton_90.hide()
         self.gridLayout.addWidget(self.pushButton_90, 9, 0, 1, 1)
 
@@ -3247,7 +3247,7 @@ class Ui_Form(object):
         self.pushButton_91.setAutoDefault(False)
         self.pushButton_91.setDefault(False)
         self.pushButton_91.setFlat(True)
-        self.pushButton_91.setObjectName("pushButton_04")
+        self.pushButton_91.setObjectName("pushButton_91")
         self.pushButton_91.hide()
         self.gridLayout.addWidget(self.pushButton_91, 9, 1, 1, 1)
 
@@ -3275,7 +3275,7 @@ class Ui_Form(object):
         self.pushButton_92.setAutoDefault(False)
         self.pushButton_92.setDefault(False)
         self.pushButton_92.setFlat(True)
-        self.pushButton_92.setObjectName("pushButton_04")
+        self.pushButton_92.setObjectName("pushButton_92")
         self.pushButton_92.hide()
         self.gridLayout.addWidget(self.pushButton_92, 9, 2, 1, 1)
 
@@ -3303,7 +3303,7 @@ class Ui_Form(object):
         self.pushButton_93.setAutoDefault(False)
         self.pushButton_93.setDefault(False)
         self.pushButton_93.setFlat(True)
-        self.pushButton_93.setObjectName("pushButton_04")
+        self.pushButton_93.setObjectName("pushButton_93")
         self.pushButton_93.hide()
         self.gridLayout.addWidget(self.pushButton_93, 9, 3, 1, 1)
 
@@ -3331,7 +3331,7 @@ class Ui_Form(object):
         self.pushButton_94.setAutoDefault(False)
         self.pushButton_94.setDefault(False)
         self.pushButton_94.setFlat(True)
-        self.pushButton_94.setObjectName("pushButton_04")
+        self.pushButton_94.setObjectName("pushButton_94")
         self.pushButton_94.hide()
         self.gridLayout.addWidget(self.pushButton_94, 9, 4, 1, 1)
 
@@ -3555,7 +3555,7 @@ class Ui_Form(object):
         self.pushButton_100.setAutoDefault(False)
         self.pushButton_100.setDefault(False)
         self.pushButton_100.setFlat(True)
-        self.pushButton_100.setObjectName("pushButton_04")
+        self.pushButton_100.setObjectName("pushButton_100")
         self.pushButton_100.hide()
         self.gridLayout.addWidget(self.pushButton_100, 10, 0, 1, 1)
 
@@ -3583,7 +3583,7 @@ class Ui_Form(object):
         self.pushButton_101.setAutoDefault(False)
         self.pushButton_101.setDefault(False)
         self.pushButton_101.setFlat(True)
-        self.pushButton_101.setObjectName("pushButton_04")
+        self.pushButton_101.setObjectName("pushButton_101")
         self.pushButton_101.hide()
         self.gridLayout.addWidget(self.pushButton_101, 10, 1, 1, 1)
 
@@ -3611,7 +3611,7 @@ class Ui_Form(object):
         self.pushButton_102.setAutoDefault(False)
         self.pushButton_102.setDefault(False)
         self.pushButton_102.setFlat(True)
-        self.pushButton_102.setObjectName("pushButton_04")
+        self.pushButton_102.setObjectName("pushButton_102")
         self.pushButton_102.hide()
         self.gridLayout.addWidget(self.pushButton_102, 10, 2, 1, 1)
 
@@ -3639,7 +3639,7 @@ class Ui_Form(object):
         self.pushButton_103.setAutoDefault(False)
         self.pushButton_103.setDefault(False)
         self.pushButton_103.setFlat(True)
-        self.pushButton_103.setObjectName("pushButton_04")
+        self.pushButton_103.setObjectName("pushButton_103")
         self.pushButton_103.hide()
         self.gridLayout.addWidget(self.pushButton_103, 10, 3, 1, 1)
 
@@ -3667,7 +3667,7 @@ class Ui_Form(object):
         self.pushButton_104.setAutoDefault(False)
         self.pushButton_104.setDefault(False)
         self.pushButton_104.setFlat(True)
-        self.pushButton_104.setObjectName("pushButton_04")
+        self.pushButton_104.setObjectName("pushButton_104")
         self.pushButton_104.hide()
         self.gridLayout.addWidget(self.pushButton_104, 10, 4, 1, 1)
 
@@ -3891,7 +3891,7 @@ class Ui_Form(object):
         self.pushButton_1100.setAutoDefault(False)
         self.pushButton_1100.setDefault(False)
         self.pushButton_1100.setFlat(True)
-        self.pushButton_1100.setObjectName("pushButton_04")
+        self.pushButton_1100.setObjectName("pushButton_1100")
         self.pushButton_1100.hide()
         self.gridLayout.addWidget(self.pushButton_1100, 11, 0, 1, 1)
 
@@ -3919,7 +3919,7 @@ class Ui_Form(object):
         self.pushButton_1111.setAutoDefault(False)
         self.pushButton_1111.setDefault(False)
         self.pushButton_1111.setFlat(True)
-        self.pushButton_1111.setObjectName("pushButton_04")
+        self.pushButton_1111.setObjectName("pushButton_1111")
         self.pushButton_1111.hide()
         self.gridLayout.addWidget(self.pushButton_1111, 11, 1, 1, 1)
 
@@ -3947,7 +3947,7 @@ class Ui_Form(object):
         self.pushButton_112.setAutoDefault(False)
         self.pushButton_112.setDefault(False)
         self.pushButton_112.setFlat(True)
-        self.pushButton_112.setObjectName("pushButton_04")
+        self.pushButton_112.setObjectName("pushButton_112")
         self.pushButton_112.hide()
         self.gridLayout.addWidget(self.pushButton_112, 11, 2, 1, 1)
 
@@ -3975,7 +3975,7 @@ class Ui_Form(object):
         self.pushButton_113.setAutoDefault(False)
         self.pushButton_113.setDefault(False)
         self.pushButton_113.setFlat(True)
-        self.pushButton_113.setObjectName("pushButton_04")
+        self.pushButton_113.setObjectName("pushButton_113")
         self.pushButton_113.hide()
         self.gridLayout.addWidget(self.pushButton_113, 11, 3, 1, 1)
 
@@ -4003,7 +4003,7 @@ class Ui_Form(object):
         self.pushButton_114.setAutoDefault(False)
         self.pushButton_114.setDefault(False)
         self.pushButton_114.setFlat(True)
-        self.pushButton_114.setObjectName("pushButton_04")
+        self.pushButton_114.setObjectName("pushButton_114")
         self.pushButton_114.hide()
         self.gridLayout.addWidget(self.pushButton_114, 11, 4, 1, 1)
 
@@ -4211,18 +4211,26 @@ class Ui_Form(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, board=None, size=10, trie=None, words=None):
+    def __init__(self, board=None, size=12, trie=None, words=None):
         self.n = size
         #self.form = Form
 
         """ Board """
-        if board == None:
-            self.board = Board(n= self.n)
+        if board is None:
+            self.board = Board(n=self.n)
+        else:
+            self.board = board
 
-        if words == None:
+        if words is None:
             self.words = Words()
-        if trie == None:
+        else:
+            self.words = words
+
+        if trie is None:
             self.trie = self.words.trie()
+        else:
+            self.trie = trie
+
         if self.n > 4:
             a= 700
             b=515

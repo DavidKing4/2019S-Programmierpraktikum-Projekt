@@ -31,6 +31,9 @@
        <pointsize>16</pointsize>
       </font>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="styleSheet">
       <string notr="true"> color: #303030;
 
@@ -80,6 +83,9 @@ Text-align:center</string>
        <family>Cambria Math</family>
        <pointsize>16</pointsize>
       </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
       <string notr="true"> color: #303030;
@@ -1096,7 +1102,7 @@ Text-align:center</string>
     </layout>
    </item>
    <item row="0" column="5" colspan="2">
-    <widget class="QTextEdit" name="textEdit_2">
+    <widget class="QTextEdit" name="AItextEdit_2">
      <property name="font">
       <font>
        <family>Cambria</family>
@@ -1169,6 +1175,9 @@ Text-align:center</string>
        <family>Cambria Math</family>
        <pointsize>16</pointsize>
       </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
       <string notr="true"> color: #303030;

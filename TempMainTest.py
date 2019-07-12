@@ -7,18 +7,23 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from NEWGUI import BOGGLE
-from Mode1 import Ui_Form
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(640, 480)
+        MainWindow.resize(628, 482)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(520, 380, 93, 28))
         self.pushButton.setObjectName("pushButton")
+        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit.setGeometry(QtCore.QRect(370, 220, 241, 22))
+        self.lineEdit.setObjectName("lineEdit")
+        self.lcdNumber_3 = QtWidgets.QLCDNumber(self.centralwidget)
+        self.lcdNumber_3.setGeometry(QtCore.QRect(530, 330, 64, 23))
+        self.lcdNumber_3.setObjectName("lcdNumber_3")
         self.widget = QtWidgets.QWidget(self.centralwidget)
         self.widget.setGeometry(QtCore.QRect(260, 30, 137, 139))
         self.widget.setObjectName("widget")
@@ -32,11 +37,13 @@ class Ui_MainWindow(object):
         self.lcdNumber_2.setObjectName("lcdNumber_2")
         self.gridLayout.addWidget(self.lcdNumber_2, 0, 1, 1, 1)
         self.verticalSlider = QtWidgets.QSlider(self.widget)
-        self.verticalSlider.setMaximum(10)
+        self.verticalSlider.setMinimum(4)
+        self.verticalSlider.setMaximum(12)
         self.verticalSlider.setOrientation(QtCore.Qt.Vertical)
         self.verticalSlider.setObjectName("verticalSlider")
         self.gridLayout.addWidget(self.verticalSlider, 1, 0, 1, 1)
         self.verticalSlider_2 = QtWidgets.QSlider(self.widget)
+        self.verticalSlider_2.setMinimum(1)
         self.verticalSlider_2.setMaximum(10)
         self.verticalSlider_2.setOrientation(QtCore.Qt.Vertical)
         self.verticalSlider_2.setObjectName("verticalSlider_2")
@@ -49,7 +56,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.label_2, 2, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 640, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 628, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -58,34 +65,16 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.verticalSlider.sliderMoved['int'].connect(self.lcdNumber.display)
-        self.verticalSlider_2.rangeChanged['int','int'].connect(self.lcdNumber_2.display)
+        self.verticalSlider_2.sliderMoved['int'].connect(self.lcdNumber_2.display)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton.setText(_translate("MainWindow", "start"))
-        self.pushButton.clicked.connect(self.open)
-
+        self.lineEdit.setPlaceholderText(_translate("MainWindow", "Example 4x4 -> abcdefghjklm"))
         self.label.setText(_translate("MainWindow", "Grid"))
         self.label_2.setText(_translate("MainWindow", "Level"))
-
-    def open(self):
-        dal = self.verticalSlider.sliderPosition()
-        val = self.lcdNumber.intValue()
-        if dal == 0:
-            cus_board = [['d', 'k', 'z', 'l'],
-                         ['f', 'p', 'x', 'q'],
-                         ['n', 'b', 'g', 'e'],
-                         ['i', 'v', 'w', 's']]
-            self.window = QtWidgets.QWidget()
-            self.ui = Ui_Form()
-            self.ui.board.letters = cus_board
-            self.ui.setupUi(self.window)
-            self.window.show()
-
-
 
 
 
