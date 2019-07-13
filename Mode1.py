@@ -4213,7 +4213,7 @@ class Ui_Form(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, board=None, size=6, trie=None, words=None):
+    def __init__(self, board=None, size=10, trie=None, words=None):
         self.n = size
         #self.form = Form
 

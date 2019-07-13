@@ -4,7 +4,7 @@ from NEWGUI import BOGGLE
 from PyQt5 import QtWidgets
 import sys
 from Words import Words
-
+from OutFunc import *
 
 
 app = QtWidgets.QApplication(sys.argv)
@@ -82,8 +82,8 @@ w.trie()
 
 import numpy as np
 from numpy import reshape
-lid = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","r","s","t"]
-a = []
+lid = ["a","b","c","d","e","f","g","h","i","j","e","l","m","n","o","p","e","s","t"]
+a = []-
 for i in range(0,len(lid), 4):
     a.append(lid[i:i+4])
 a
@@ -130,3 +130,18 @@ c
 
 wan = "araba"
 wan[:-1]
+
+listi_list("e",a )
+
+import random
+random.shuffle(lid)
+
+ab = []
+ab +=lid
+
+-1 in a
+
+a.index((1,0))
+
+t= [False,False,False,False]
+any(t)

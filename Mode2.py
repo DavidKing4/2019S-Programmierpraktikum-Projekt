@@ -596,7 +596,7 @@ class Ui_Formiki(object):
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         font = QtGui.QFont()
         font.setFamily("Cambria")
-        font.setPointSize(18)
+        font.setPointSize(26)
         self.label_4.setFont(font)
         self.label_4.setText("")
         self.label_4.setObjectName("label_4")
@@ -4839,6 +4839,9 @@ class Ui_Formiki(object):
         
         # Shortcuts
         self.shortcut.activated.connect(self.cleartable)
+        
+        # Text to Click
+        self.lineEdit.textChanged.connect(self.textToClick)
 
         """ Button List """
         self.blist = [[self.pushButton_00, self.pushButton_01, self.pushButton_02, self.pushButton_03, self.pushButton_04,self.pushButton_05, self.pushButton_06, self.pushButton_07, self.pushButton_08, self.pushButton_09,self.pushButton_010, self.pushButton_011],
@@ -4875,9 +4878,12 @@ class Ui_Formiki(object):
             self.blist[i[0]][i[1]].setStyleSheet(self.defa)
             self.blist[i[0]][i[1]].setChecked(False)
         self.w = ""
-        self.lineEdit.setText(self.w)
+        self.label_4.setText(self.w)
         self.chain = []
         
+
+            
+    
 
     def vstimesingle(self, pressed ):
         source = Formiki.sender()
@@ -4891,7 +4897,7 @@ class Ui_Formiki(object):
             for i in self.chain:
                  self.blist[i[0]][i[1]].setStyleSheet(self.blue)
             self.w += source.text()   # Expand the word with the new letter
-            self.lineEdit.setText(self.w)  # show the word on line edit
+            self.label_4.setText(self.w)  # show the word on line edit
             for j in self.blist:
                 for k in j:
                     k.setEnabled(True)
@@ -4902,19 +4908,20 @@ class Ui_Formiki(object):
             """ NEIGHBOR OR NOT SITUATION """
             if len(self.chain) > 1:
                     last = self.chain[-2]
-                    hood = []
-                    for i in self.directions:
-                            QtWidgets.qApp.processEvents()
-                            candi = tuple(map(add, i, last))
-                            if self.n > candi[0] >= 0 and self.n > candi[1] >= 0:
-                                    hood.append(candi)
+                    hood = self.hoodie(last)
+                    # hood = []
+                    # for i in self.directions:
+                    #         QtWidgets.qApp.processEvents()
+                    #         candi = tuple(map(add, i, last))
+                    #         if self.n > candi[0] >= 0 and self.n > candi[1] >= 0:
+                    #                 hood.append(candi)
                     if pos not in hood:
                             for i in self.chain[0:(len(self.chain) - 1)]:
                                     QtWidgets.qApp.processEvents()
                                     self.blist[i[0]][i[1]].setStyleSheet(self.defa)
                                     self.blist[i[0]][i[1]].setChecked(False)
                                     self.chain = self.chain[-1:]  # Chain will be reduced to the last element
-                            self.lineEdit.setText(self.w[-1])  # Line edit will be reduced to last letter
+                            self.label_4.setText(self.w[-1])  # Line edit will be reduced to last letter
                             self.w = self.w[-1]  # The word will be reduced to last letter
 
             """ VALID WORD SITUATION """
@@ -5014,17 +5021,68 @@ class Ui_Formiki(object):
             """ DESELECTION SITUATION """
             self.w = self.w[:-1]
             self.chain = self.chain[:-1]
-            self.lineEdit.setText(self.w)
+            self.label_4.setText(self.w)
             for j in self.blist:
                 for k in j:
                     k.setEnabled(True)
             for i in self.chain[:-1]:
                 self.blist[i[0]][i[1]].setEnabled(False)
-        
 
+    def textToClick(self):
+        txt = self.lineEdit.text()
+        blinklist = []
+        hood = []
+        if len(txt) < 3:
+
+
+            if len(txt) == 1:
+                blink = listi_list(txt[0], self.board.letters)
+                for j in blink:
+                    self.blist[j[0]][j[1]].setStyleSheet(self.blue)
+            elif len(txt)==2:
+                blink = listi_list(txt[0], self.board.letters)
+                for j in blink:
+                    hood.append(self.hoodie(j))
+                blink2 = listi_list(txt[1], self.board.letters)
+                for jan in hood:
+                    truth = []
+                    for imp in blink2:
+                        if imp in jan:
+                            self.blist[imp[0]][imp[1]].setStyleSheet(self.blue)
+                            truth.append(True)
+                        else:
+                            truth.append(False)
+                    if any(truth) == False:
+                        a = blink[hood.index(jan)]
+                        self.blist[a[0]][a[1]].setStyleSheet(self.defa)
+        # if len(text)>=3:
+        #     for i in txt:
+
+
+
+
+
+
+
+
+        
 
     def vstimestart(self):
             pass
+    
+    """ SUPLEMENTARY METHODS """
+    def hoodie(self, last):
+        hood = []
+        for i in self.directions:
+            QtWidgets.qApp.processEvents()
+            candi = tuple(map(add, i, last))
+            if self.n > candi[0] >= 0 and self.n > candi[1] >= 0:
+                hood.append(candi)
+        return hood
+
+
+
+    
 
 
 
