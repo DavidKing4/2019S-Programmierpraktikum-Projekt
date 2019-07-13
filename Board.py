@@ -35,7 +35,9 @@ class Board:
                     while len(ran) < len(lettersString):
                         ran.append(random.choice(lettersString))
                         ran = list(set(ran))
+                        
                     # bran.append(lambda: ran[k] for k in range(len(ran)-1))
+                    random.shuffle(ran)
                     bran += ran
 
                 for imp in range(n):
