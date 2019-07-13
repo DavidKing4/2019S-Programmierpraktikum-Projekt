@@ -14,6 +14,7 @@ from operator import add
 
 class Ui_Formiki(object):
     def setupUi(self, Formiki):
+        self.Formiki = Formiki
         Formiki.setObjectName("Formiki")
         Formiki.resize(700, 521)
         Formiki.setStyleSheet("background: #f2f1ef")
@@ -4426,7 +4427,7 @@ class Ui_Formiki(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, board=None, size=10, trie=None, words=None):
+    def __init__(self, Formiki, board=None, size=10, trie=None, words=None):
         self.n = size
         self.w = ""
         self.wordlist = []
@@ -4866,9 +4867,9 @@ class Ui_Formiki(object):
     """ BUTTON FUNCTIONS """
 
     def brokeiki(self):
-        sender = Formiki.sender()
+        sender = self.Formiki.sender()
         if sender.text() == "Exit":
-            Formiki.close()
+            self.Formiki.close()
 
     def cleartable(self):
         for j in self.blist:
@@ -4886,7 +4887,7 @@ class Ui_Formiki(object):
     
 
     def vstimesingle(self, pressed ):
-        source = Formiki.sender()
+        source = self.Formiki.sender()
 
 
         if pressed:

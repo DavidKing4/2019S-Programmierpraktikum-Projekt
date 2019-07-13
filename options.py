@@ -8,19 +8,20 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Mode1 import Ui_Form
+from Mode2 import Ui_Formiki
 from Board import Board
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(345, 198)
+        Dialog.resize(370, 198)
         self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
         self.buttonBox.setGeometry(QtCore.QRect(-20, 161, 341, 21))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
         self.gridLayoutWidget = QtWidgets.QWidget(Dialog)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(19, 19, 301, 131))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(19, 19, 323, 131))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -70,6 +71,10 @@ class Ui_Dialog(object):
         self.radioButton_2.setObjectName("radioButton_2")
         self.horizontalLayout_2.addWidget(self.radioButton_2)
         self.gridLayout.addLayout(self.horizontalLayout_2, 2, 2, 1, 1)
+        self.label_5 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_5.setObjectName("label_5")
+        self.label_5.hide()
+        self.gridLayout.addWidget(self.label_5, 5, 3, 1, 1, QtCore.Qt.AlignVCenter)
 
         self.retranslateUi(Dialog)
         self.buttonBox.accepted.connect(Dialog.accept)
@@ -85,6 +90,7 @@ class Ui_Dialog(object):
         self.label.setText(_translate("Dialog", "Size: "))
         self.radioButton.setText(_translate("Dialog", "Solver"))
         self.radioButton_2.setText(_translate("Dialog", "vs Com."))
+        self.label_5.setText(_translate("Dialog", "(enter all letters as one string)"))
 
         self.checkBox.stateChanged.connect(lambda: self.updateCustom())
         self.buttonBox.accepted.connect(lambda: self.openMain())
@@ -92,8 +98,10 @@ class Ui_Dialog(object):
     def updateCustom(self):
         if self.checkBox.isChecked():
             self.lineEdit.show()
+            self.label_5.show()
         else:
             self.lineEdit.hide()
+            self.label_5.hide()
 
     def openMain(self):
 
@@ -101,23 +109,35 @@ class Ui_Dialog(object):
         n = self.spinBox.value()
 
         if self.checkBox.isChecked():
-            letters = [['' for i in range(n)] for j in range(n)]
-            lRaw = self.lineEdit.text()
-            index = 0
-            for i in range(n):
-                for j in range(n):
-                    letters[i][j] = lRaw[index]
-                    index += 1
+            try:
+                letters = [['' for i in range(n)] for j in range(n)]
+                lRaw = self.lineEdit.text()
+                index = 0
+                for i in range(n):
+                    for j in range(n):
+                        letters[i][j] = lRaw[index]
+                        index += 1
+            except:
+                print(f'Custom input should have {n**2} letters, entered as one string,')
+                print('please try again.')
+                sys.exit()
 
             b = Board(self.spinBox.value(), False, letters)
         else:
             b = None
 
-        global Form
-        Form = QtWidgets.QWidget()
-        ui = Ui_Form(board = b, size = n, trie = None, words = None)
-        ui.setupUi(Form)
-        Form.show()
+        if self.radioButton.isChecked():
+            global Form
+            Form = QtWidgets.QWidget()
+            ui = Ui_Form(board = b, size = n, trie = None, words = None)
+            ui.setupUi(Form)
+            Form.show()
+        elif self.radioButton_2.isChecked():
+            global Formiki
+            Formiki = QtWidgets.QWidget()
+            ui = Ui_Formiki(Formiki, board = b, size = n, trie = None, words = None)
+            ui.setupUi(Formiki)
+            Formiki.show()
 
 if __name__ == "__main__":
     import sys
