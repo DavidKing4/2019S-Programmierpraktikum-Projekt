@@ -1,4 +1,5 @@
 import time
+import threading
 
 def i_list(el, li):
     out = None
@@ -30,3 +31,9 @@ def formatSec(x):
     seconds_rem = x
     return str(seconds_rem)
 
+class RestartableThread(threading.Thread):
+    def __init__(self, *args, **kwargs):
+        self._args, self._kwargs = args, kwargs
+        super().__init__(*args, **kwargs)
+    def clone(self):
+        return RestartableThread(*args, **kwargs)
