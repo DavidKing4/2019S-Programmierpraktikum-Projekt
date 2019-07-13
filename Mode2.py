@@ -5114,7 +5114,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Formiki = QtWidgets.QWidget()
-    ui = Ui_Formiki()
+    ui = Ui_Formiki(Formiki)
     ui.setupUi(Formiki)
     Formiki.show()
     sys.exit(app.exec_())
