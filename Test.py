@@ -5,6 +5,8 @@ from PyQt5 import QtWidgets
 import sys
 from Words import Words
 from OutFunc import *
+import time
+from OutFunc import *
 
 
 app = QtWidgets.QApplication(sys.argv)
@@ -145,3 +147,11 @@ a.index((1,0))
 
 t= [False,False,False,False]
 any(t)
+
+
+def countdown(nsec):
+    for x in range(nsec, -1, -1):
+        time.sleep(1)
+    return x
+
+countdown(30)

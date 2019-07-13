@@ -1,3 +1,5 @@
+import time
+
 def i_list(el, li):
     out = None
     for i in range(len(li)):
@@ -13,4 +15,18 @@ def listi_list(el, li):
             if el == li[i][j]:
                 out.append((i,j))
     return out
+
+
+#def min_cd(mins):
+
+
+
+
+
+def formatTime(x):
+    minutes, seconds_rem = divmod(x, 60)
+    return str(minutes)+":"+str(seconds_rem)
+def formatSec(x):
+    seconds_rem = x
+    return str(seconds_rem)
 

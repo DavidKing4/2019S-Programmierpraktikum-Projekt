@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QShortcut
 from PyQt5.QtGui import QKeySequence
 from OutFunc import *
 from operator import add
+from threading import Thread
 
 
 
@@ -4426,13 +4427,16 @@ class Ui_Formiki(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, board=None, size=10, trie=None, words=None):
+    def __init__(self, board=None, size=4, trie=None, words=None, seconds=180):
         self.n = size
         self.w = ""
         self.wordlist = []
         self.chain = []
         self.directions = [(1,1),(1,0),(1,-1),(0,-1),(-1,-1),(-1,0),(-1,1),(0,1)]
         self.paths = []
+        self.ctd = seconds
+        self.sec = None
+
         
 
         """ COLORS """
@@ -4836,6 +4840,7 @@ class Ui_Formiki(object):
         # Break Buttons
         
         self.pushButton.clicked.connect(self.brokeiki)
+        self.pushButton_4.clicked.connect(self.brokeiki)
         
         # Shortcuts
         self.shortcut.activated.connect(self.cleartable)
@@ -4869,7 +4874,12 @@ class Ui_Formiki(object):
         sender = Formiki.sender()
         if sender.text() == "Exit":
             Formiki.close()
-
+        sender = Formiki.sender()
+        if sender.text() == "Start":
+            # self.lcdNumber.display(formatSec(self.countdown(180)))
+            t1 = Thread(target = self.countdown, args= (self.ctd,))
+            t1.start()
+            #self.countdown(180)
     def cleartable(self):
         for j in self.blist:
             for k in j:
@@ -4906,6 +4916,8 @@ class Ui_Formiki(object):
                 
 
             """ NEIGHBOR OR NOT SITUATION """
+            #if len(self.chain) ==1:
+
             if len(self.chain) > 1:
                     last = self.chain[-2]
                     hood = self.hoodie(last)
@@ -4920,7 +4932,7 @@ class Ui_Formiki(object):
                                     QtWidgets.qApp.processEvents()
                                     self.blist[i[0]][i[1]].setStyleSheet(self.defa)
                                     self.blist[i[0]][i[1]].setChecked(False)
-                                    self.chain = self.chain[-1:]  # Chain will be reduced to the last element
+                            self.chain = self.chain[-1:]  # Chain will be reduced to the last element
                             self.label_4.setText(self.w[-1])  # Line edit will be reduced to last letter
                             self.w = self.w[-1]  # The word will be reduced to last letter
 
@@ -5071,6 +5083,15 @@ class Ui_Formiki(object):
             pass
     
     """ SUPLEMENTARY METHODS """
+
+    def countdown(self, nsec):
+            self.sec = nsec
+            for x in range(nsec, -1, -1):
+                QtWidgets.qApp.processEvents()
+                time.sleep(1)
+                self.lcdNumber.display(x)
+                self.sec = x
+
     def hoodie(self, last):
         hood = []
         for i in self.directions:
