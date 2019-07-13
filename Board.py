@@ -119,21 +119,22 @@ class Board:
 
 
     # depth first search
-    def dfs(self, board, trie, start = (0, 0), prefix = '', cmdVis = False, connection = None, guiVis = False, gui = False, chainList = [], delay = 0): #big boy function
+    def dfs(self, board, trie, start = (0, 0), prefix = '', cmdVis = False, connection = None, guiVis = False, gui = None, chainList = [], delay = 0): #big boy function
         d = delay
 
-        if gui.stop:
-            for i in gui.blist:
-                for j in i:
-                    j.setStyleSheet(" color: #303030;\n"
-                                    "\n"
-                                    "background: #e87461 ;\n"
-                                    "border: 2px solid #303030;\n"
-                                    "    border-radius: 20px;\n"
-                                    "    border-style: outset;\n"
-                                    "\n"
-                                    "Text-align:center")
-            return
+        if gui != None:
+            if gui.stop:
+                for i in gui.blist:
+                    for j in i:
+                        j.setStyleSheet(" color: #303030;\n"
+                                        "\n"
+                                        "background: #e87461 ;\n"
+                                        "border: 2px solid #303030;\n"
+                                        "    border-radius: 20px;\n"
+                                        "    border-style: outset;\n"
+                                        "\n"
+                                        "Text-align:center")
+                return
 
         if cmdVis:
             print(f'prefix = {prefix}')

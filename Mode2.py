@@ -4875,7 +4875,7 @@ class Ui_Formiki(object):
         sender = self.Formiki.sender()
         if sender.text() == "Exit":
             self.Formiki.close()
-        sender = Formiki.sender()
+        sender = self.Formiki.sender()
         if sender.text() == "Start":
             # self.lcdNumber.display(formatSec(self.countdown(180)))
             t1 = Thread(target = self.countdown, args= (self.ctd,))

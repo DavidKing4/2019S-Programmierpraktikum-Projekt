@@ -21,7 +21,7 @@ class Ui_Dialog(object):
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
         self.gridLayoutWidget = QtWidgets.QWidget(Dialog)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(19, 19, 323, 131))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(19, 19, 323, 141))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -75,6 +75,14 @@ class Ui_Dialog(object):
         self.label_5.setObjectName("label_5")
         self.label_5.hide()
         self.gridLayout.addWidget(self.label_5, 5, 3, 1, 1, QtCore.Qt.AlignVCenter)
+        self.label_6 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_6.setObjectName("label_6")
+        self.gridLayout.addWidget(self.label_6, 6, 0, 1, 1)
+        self.checkBox_2 = QtWidgets.QCheckBox(self.gridLayoutWidget)
+        self.checkBox_2.setText("")
+        self.checkBox_2.setObjectName("checkBox_2")
+        self.checkBox_2.setChecked(True)
+        self.gridLayout.addWidget(self.checkBox_2, 6, 2, 1, 1)
 
         self.retranslateUi(Dialog)
         self.buttonBox.accepted.connect(Dialog.accept)
@@ -91,6 +99,7 @@ class Ui_Dialog(object):
         self.radioButton.setText(_translate("Dialog", "Solver"))
         self.radioButton_2.setText(_translate("Dialog", "vs Com."))
         self.label_5.setText(_translate("Dialog", "(enter all letters as one string)"))
+        self.label_6.setText(_translate("Dialog", "Visual:"))
 
         self.checkBox.stateChanged.connect(lambda: self.updateCustom())
         self.buttonBox.accepted.connect(lambda: self.openMain())
@@ -129,7 +138,7 @@ class Ui_Dialog(object):
         if self.radioButton.isChecked():
             global Form
             Form = QtWidgets.QWidget()
-            ui = Ui_Form(board = b, size = n, trie = None, words = None)
+            ui = Ui_Form(board = b, size = n, trie = None, words = None, vis = self.checkBox_2.isChecked())
             ui.setupUi(Form)
             Form.show()
         elif self.radioButton_2.isChecked():

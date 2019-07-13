@@ -1,5 +1,6 @@
 from Board import *
 from Words import Words
+from Results import Ui_Dialog
 import math
 import sys
 import time
@@ -4215,10 +4216,10 @@ class Ui_Form(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, board=None, size=10, trie=None, words=None):
+    def __init__(self, board=None, size=10, trie=None, words=None, vis = True):
         self.n = size
+        self.vis = vis
         #self.form = Form
-
         """ Board """
         if board is None:
             self.board = Board(n=self.n)
@@ -4686,7 +4687,7 @@ class Ui_Form(object):
     def broke(self):
         sender = self.Form.sender()
         if sender.text() == "Exit":
-            Form.close()
+            self.Form.close()
         elif sender.text() == "Stop":
             self.stop = True
             QtWidgets.qApp.processEvents()
@@ -4703,7 +4704,7 @@ class Ui_Form(object):
         temp = copy.deepcopy(self.board.letters)
         temp[bs[0]][bs[1]] = '-'
 
-        Board.dfs(self.board, temp, stringTrie, (bs[0], bs[1]), startChar, False, None, True, self, [(bs[0], bs[1])])
+        Board.dfs(self.board, temp, stringTrie, (bs[0], bs[1]), startChar, False, None, self.vis, self, [(bs[0], bs[1])])
         points = 0
         polist = list(self.board.words)
         for po in polist:
@@ -4745,7 +4746,7 @@ class Ui_Form(object):
                 temp = copy.deepcopy(self.board.letters)
                 temp[i][j] = '-'
 
-                Board.dfs(self.board, temp, stringTrie, (i,j), startChar, False, None, True, self, [(i,j)], delay=0)
+                Board.dfs(self.board, temp, stringTrie, (i,j), startChar, False, None, False, self, [(i,j)], delay=0)
 
                 if self.stop:
                     self.progressBar.setValue(0)
@@ -4780,6 +4781,13 @@ class Ui_Form(object):
         for i in self.board.words:
             self.textEdit.append(i)
         self.lcdNumber_2.display(len(self.board.words))
+
+        if not self.stop:
+            global Results
+            Results = QtWidgets.QDialog(None, QtCore.Qt.WindowSystemMenuHint | QtCore.Qt.WindowTitleHint | QtCore.Qt.WindowCloseButtonHint)
+            ui = Ui_Dialog(self.board.words, len(set(self.board.words)), points)
+            ui.setupUi(Results)
+            Results.show()
 
 
 
