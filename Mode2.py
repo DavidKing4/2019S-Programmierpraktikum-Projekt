@@ -15,6 +15,7 @@ from threading import Thread
 
 class Ui_Formiki(object):
     def setupUi(self, Formiki):
+        self.Formiki = Formiki
         Formiki.setObjectName("Formiki")
         Formiki.resize(700, 521)
         Formiki.setStyleSheet("background: #f2f1ef")
@@ -4427,7 +4428,7 @@ class Ui_Formiki(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, board=None, size=4, trie=None, words=None, seconds=180):
+    def __init__(self, Formiki, board=None, size=10, trie=None, words=None, seconds=180):
         self.n = size
         self.w = ""
         self.wordlist = []
@@ -4437,7 +4438,7 @@ class Ui_Formiki(object):
         self.ctd = seconds
         self.sec = None
 
-        
+
 
         """ COLORS """
         self.blue = " color: #303030;\n""\n""background: #74b9ff ;\n""border: 2px solid #303030;\n""    border-radius: 20px;\n""    border-style: outset;\n""\n""Text-align:center;"
@@ -4841,7 +4842,7 @@ class Ui_Formiki(object):
         
         self.pushButton.clicked.connect(self.brokeiki)
         self.pushButton_4.clicked.connect(self.brokeiki)
-        
+
         # Shortcuts
         self.shortcut.activated.connect(self.cleartable)
         
@@ -4871,9 +4872,9 @@ class Ui_Formiki(object):
     """ BUTTON FUNCTIONS """
 
     def brokeiki(self):
-        sender = Formiki.sender()
+        sender = self.Formiki.sender()
         if sender.text() == "Exit":
-            Formiki.close()
+            self.Formiki.close()
         sender = Formiki.sender()
         if sender.text() == "Start":
             # self.lcdNumber.display(formatSec(self.countdown(180)))
@@ -4896,7 +4897,7 @@ class Ui_Formiki(object):
     
 
     def vstimesingle(self, pressed ):
-        source = Formiki.sender()
+        source = self.Formiki.sender()
 
 
         if pressed:

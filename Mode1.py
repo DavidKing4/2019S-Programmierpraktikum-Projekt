@@ -12,6 +12,8 @@ from PyQt5.QtWidgets import QApplication, QDesktopWidget
 class Ui_Form(object):
     def setupUi(self, Form):
 
+        self.Form = Form
+
         Form.setObjectName("Form")
         Form.resize(700, 515)
         Form.setStyleSheet("background: #f2f1ef")
@@ -4682,7 +4684,7 @@ class Ui_Form(object):
 
     # Break functions
     def broke(self):
-        sender = Form.sender()
+        sender = self.Form.sender()
         if sender.text() == "Exit":
             Form.close()
         elif sender.text() == "Stop":
