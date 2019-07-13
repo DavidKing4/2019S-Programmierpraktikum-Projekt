@@ -4428,7 +4428,7 @@ class Ui_Formiki(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, Formiki, board=None, size=10, trie=None, words=None, seconds=180):
+    def __init__(self, Formiki, board=None, size=10, trie=None, words=None, seconds=10):
         self.n = size
         self.w = ""
         self.wordlist = []
@@ -4437,6 +4437,13 @@ class Ui_Formiki(object):
         self.paths = []
         self.ctd = seconds
         self.sec = None
+
+        self.t1 = Thread(target=self.countdown, args=(self.ctd,))
+
+        self.font = QtGui.QFont()
+        self.font.setPointSize(12)
+        self.font.setFamily("Cambria")
+        
 
 
 
@@ -4448,6 +4455,7 @@ class Ui_Formiki(object):
         self.green = " color: #303030;\n""\n""background: #55efc4 ;\n""border: 2px solid #303030;\n""    border-radius: 20px;\n""    border-style: outset;\n""\n""Text-align:center;"
 
         self.red = " color: #303030;\n""\n""background: #d63031 ;\n""border: 2px solid #303030;\n""    border-radius: 20px;\n""    border-style: outset;\n""\n""Text-align:center;"
+        self.darkblue = " color: #303030;\n""\n""background: #0984e3 ;\n""border: 2px solid #303030;\n""    border-radius: 20px;\n""    border-style: outset;\n""\n""Text-align:center;"
         
         """ SHORTCUT-KEY BINDINGS """
         self.shortcut = QtWidgets.QShortcut(QtGui.QKeySequence(QtCore.Qt.Key_Escape), Formiki)
@@ -4862,12 +4870,24 @@ class Ui_Formiki(object):
                       [self.pushButton_90, self.pushButton_91, self.pushButton_92, self.pushButton_93, self.pushButton_94,self.pushButton_95, self.pushButton_96, self.pushButton_97, self.pushButton_98, self.pushButton_99,self.pushButton_910, self.pushButton_911],
                       [self.pushButton_100, self.pushButton_101, self.pushButton_102, self.pushButton_103,self.pushButton_104, self.pushButton_105, self.pushButton_106, self.pushButton_107,self.pushButton_108, self.pushButton_109, self.pushButton_1010, self.pushButton_1011],
                       [self.pushButton_1100, self.pushButton_1111, self.pushButton_112, self.pushButton_113,self.pushButton_114, self.pushButton_115, self.pushButton_116, self.pushButton_117,self.pushButton_118, self.pushButton_119, self.pushButton_11110, self.pushButton_11111]]
-
+        
+        
+        
+        if not self.t1.isAlive():
+            self.label_4.setText("Press Start")
+            self.dis_act_all()
         """ WHAT TO SHOW """
         if self.n > 4:
             for i in range(self.n):
                 for j in range(self.n):
                     self.blist[i][j].show()
+        if self.n>=10:
+            Formiki.showFullScreen()
+
+        # if self.t1.isAlive():
+        #         self.pushButton_4.setEnabled(False)
+        # else:
+        #         self.pushButton_4.setEnabled(True)
 
     """ BUTTON FUNCTIONS """
 
@@ -4877,20 +4897,42 @@ class Ui_Formiki(object):
             self.Formiki.close()
         sender = self.Formiki.sender()
         if sender.text() == "Start":
+            #self.t1 = Thread(target=self.countdown, args=(self.ctd,))
+            
+            self.dis_act_all(active=True)
             # self.lcdNumber.display(formatSec(self.countdown(180)))
-            t1 = Thread(target = self.countdown, args= (self.ctd,))
-            t1.start()
-            #self.countdown(180)
+            self.t1.start()
+            self.pushButton_4.setText("Rest.")
+            self.pushButton_4.setStyleSheet(self.darkblue)
+        if sender.text() == "Rest.":
+            if self.t1.isAlive():
+                pass
+            else:
+                self.cleartable()
+                self.dis_act_all(active=True)
+                self.all_default_col()
+                self.AItextEdit_2.setText("")
+                self.t1 = Thread(target=self.countdown, args=(self.ctd,))
+                self.t1.start()
+            
+            
+            
+    
+    
+    
     def cleartable(self):
-        for j in self.blist:
-            for k in j:
-                k.setEnabled(True)
-        for i in self.chain:
-            self.blist[i[0]][i[1]].setStyleSheet(self.defa)
-            self.blist[i[0]][i[1]].setChecked(False)
-        self.w = ""
-        self.label_4.setText(self.w)
-        self.chain = []
+        if not self.t1.isAlive():
+            pass
+        else:
+            for j in self.blist:
+                for k in j:
+                    k.setEnabled(True)
+            for i in self.chain:
+                self.blist[i[0]][i[1]].setStyleSheet(self.defa)
+                self.blist[i[0]][i[1]].setChecked(False)
+            self.w = ""
+            self.label_4.setText(self.w)
+            self.chain = []
         
 
             
@@ -4920,22 +4962,23 @@ class Ui_Formiki(object):
             #if len(self.chain) ==1:
 
             if len(self.chain) > 1:
-                    last = self.chain[-2]
-                    hood = self.hoodie(last)
-                    # hood = []
-                    # for i in self.directions:
-                    #         QtWidgets.qApp.processEvents()
-                    #         candi = tuple(map(add, i, last))
-                    #         if self.n > candi[0] >= 0 and self.n > candi[1] >= 0:
-                    #                 hood.append(candi)
-                    if pos not in hood:
-                            for i in self.chain[0:(len(self.chain) - 1)]:
-                                    QtWidgets.qApp.processEvents()
-                                    self.blist[i[0]][i[1]].setStyleSheet(self.defa)
-                                    self.blist[i[0]][i[1]].setChecked(False)
-                            self.chain = self.chain[-1:]  # Chain will be reduced to the last element
-                            self.label_4.setText(self.w[-1])  # Line edit will be reduced to last letter
-                            self.w = self.w[-1]  # The word will be reduced to last letter
+                last = self.chain[-2]
+                hood = self.hoodie(last)
+                # hood = []
+                # for i in self.directions:
+                #         QtWidgets.qApp.processEvents()
+                #         candi = tuple(map(add, i, last))
+                #         if self.n > candi[0] >= 0 and self.n > candi[1] >= 0:
+                #                 hood.append(candi)
+                if pos not in hood:
+                    for i in self.chain[0:(len(self.chain) - 1)]:
+                        QtWidgets.qApp.processEvents()
+                        self.blist[i[0]][i[1]].setStyleSheet(self.defa)
+                        self.blist[i[0]][i[1]].setChecked(False)
+                        self.blist[i[0]][i[1]].setEnabled(True)
+                    self.chain = self.chain[-1:]  # Chain will be reduced to the last element
+                    self.label_4.setText(self.w[-1])  # Line edit will be reduced to last letter
+                    self.w = self.w[-1]  # The word will be reduced to last letter
 
             """ VALID WORD SITUATION """
             if len(self.w) >= 3 and self.w in self.words.list:
@@ -5091,7 +5134,9 @@ class Ui_Formiki(object):
                 QtWidgets.qApp.processEvents()
                 time.sleep(1)
                 self.lcdNumber.display(x)
-                self.sec = x
+            self.sec = x
+            self.dis_act_all()
+            
 
     def hoodie(self, last):
         hood = []
@@ -5101,6 +5146,22 @@ class Ui_Formiki(object):
             if self.n > candi[0] >= 0 and self.n > candi[1] >= 0:
                 hood.append(candi)
         return hood
+    
+    def dis_act_all(self, active = False):
+        if active == True:
+            for i in range(self.n - 1):
+                for j in range(self.n - 1):
+                    self.blist[i][j].setEnabled(True)
+                    
+        else:
+            for i in range(self.n-1):
+                for j in range(self.n-1):
+                    self.blist[i][j].setEnabled(False)
+    def all_default_col(self):
+        for i in range(self.n - 1):
+            for j in range(self.n - 1):
+                self.blist[i][j].setStyleSheet(self.defa)
+    
 
 
 
