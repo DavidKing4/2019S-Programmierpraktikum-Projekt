@@ -4236,7 +4236,7 @@ class Ui_Form(object):
         if self.n > 4:
             a= 700
             b=515
-            Form.resize(a + self.n*(2*9), b+self.n*(2*16))
+            #Form.resize(a + self.n*(2*9), b+self.n*(2*16))
         self.wordList = []
         self.stop = False
         # qr = Form.frameGeometry()

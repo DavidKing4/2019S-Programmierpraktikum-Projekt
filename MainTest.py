@@ -1,3 +1,4 @@
+from Board import Board
 from PyQt5 import QtCore, QtGui, QtWidgets
 from NEWGUI import BOGGLE
 from Mode1 import Ui_Form
@@ -5,6 +6,7 @@ from Mode1 import Ui_Form
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        self.MainWindow = MainWindow
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(628, 482)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -72,17 +74,8 @@ class Ui_MainWindow(object):
 
 
 
-
-
-
-
-
-
-
-
-
         """ UI BORDER -------------------------------------------------------------------"""
-        self.pushButton.clicked.connect(self.open)
+        self.Form = self.pushButton.clicked.connect(self.open)
 
     def open(self):
         dal = self.verticalSlider.sliderPosition()
@@ -94,11 +87,23 @@ class Ui_MainWindow(object):
         for i in range(0, len(culi), dal):
             cusboard.append(culi[i:i+dal])
 
+        global Form
         Form = QtWidgets.QWidget()
-        self.ui = Ui_Form()
+        ui = Ui_Form(board = Board(dal, False, cusboard), size = dal)
+        #(self, board=None, size=6, trie=None, words=None):
         #self.ui.board = cusboard
         ui.setupUi(Form)
         Form.show()
+        self.MainWindow.close()
+        return(Form)
+        #sys.exit(app.exec_())
+
+        # app = QtWidgets.QApplication(sys.argv)
+        # Form = QtWidgets.QWidget()
+        # ui = Ui_Form()
+        # ui.setupUi(Form)
+        # Form.show()
+        # sys.exit(app.exec_())
 
         # self.window = QtWidgets.QWidget()
         # self.ui = Ui_Form(size=dal, board=cusboard)
@@ -129,6 +134,7 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
+    print(type(Ui_MainWindow))
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
