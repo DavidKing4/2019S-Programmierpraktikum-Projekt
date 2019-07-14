@@ -5128,7 +5128,8 @@ class Ui_Formiki(object):
         txt = self.lineEdit.text()
         blinklist = []
         hood = []
-        
+        self.label_4.setText(txt)
+
         for i in self.blist:
             for j in i:
                 j.setStyleSheet(self.defa)
