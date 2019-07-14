@@ -4216,7 +4216,8 @@ class Ui_Form(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, board=None, size=10, trie=None, words=None, vis = True):
+    def __init__(self, board=None, size=10, trie=None, words=None, vis = True, delay = 0):
+        self.delay = delay
         self.n = size
         self.vis = vis
         #self.form = Form
@@ -4697,17 +4698,18 @@ class Ui_Form(object):
 
 
 
-    def dfsguisingle(self, bs, delay = 0):
+    def dfsguisingle(self, bs):
         self.stop = False
         self.board.words = []    # Whenever you press start the list and points will be resetted
         self.textEdit.clear()    # Text edit must be cleared
-
+        
+        
         stringTrie = self.trie
         startChar = self.board.letters[bs[0]][bs[1]]
         temp = copy.deepcopy(self.board.letters)
         temp[bs[0]][bs[1]] = '-'
 
-        Board.dfs(self.board, temp, stringTrie, (bs[0], bs[1]), startChar, False, None, self.vis, self, [(bs[0], bs[1])])
+        Board.dfs(self.board, temp, stringTrie, (bs[0], bs[1]), startChar, False, None, self.vis, self, [(bs[0], bs[1])], delay = self.delay)
         points = 0
         polist = list(self.board.words)
         for po in polist:
@@ -4749,7 +4751,7 @@ class Ui_Form(object):
                 temp = copy.deepcopy(self.board.letters)
                 temp[i][j] = '-'
 
-                Board.dfs(self.board, temp, stringTrie, (i,j), startChar, False, None, self.vis, self, [(i,j)], delay=0)
+                Board.dfs(self.board, temp, stringTrie, (i,j), startChar, False, None, self.vis, self, [(i,j)], delay=self.delay)
 
                 if self.stop:
                     self.progressBar.setValue(0)
