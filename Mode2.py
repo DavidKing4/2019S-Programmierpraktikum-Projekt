@@ -640,6 +640,7 @@ class Ui_Formiki(object):
 "\n"
 "Text-align:center")
         self.pushButton_5.setObjectName("pushButton_5")
+        self.pushButton_5.hide()
         self.horizontalLayout_3.addWidget(self.pushButton_5)
         self.pushButton = QtWidgets.QPushButton(Formiki)
         self.pushButton.setMinimumSize(QtCore.QSize(70, 28))
@@ -4430,7 +4431,7 @@ class Ui_Formiki(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, Formiki, board=None, size=6, trie=None, words=None, seconds=10):
+    def __init__(self, Formiki, board=None, size=6, trie=None, words=None, seconds=120):
         self.n = size
         self.w = ""
         self.wordlist = []
@@ -4699,6 +4700,7 @@ class Ui_Formiki(object):
         """ BUTTON-FUNCTION CONNECTIONS """
 
         self.pushButton_3.clicked.connect(lambda: self.vstimestart())
+        self.pushButton_2.clicked.connect(lambda: self.cheat())
 
         self.pushButton_00.clicked[bool].connect(self.vstimesingle)
         self.pushButton_01.clicked[bool].connect(self.vstimesingle)
@@ -4996,12 +4998,7 @@ class Ui_Formiki(object):
             if len(self.chain) > 1:
                 last = self.chain[-2]
                 hood = self.hoodie(last)
-                # hood = []
-                # for i in self.directions:
-                #         QtWidgets.qApp.processEvents()
-                #         candi = tuple(map(add, i, last))
-                #         if self.n > candi[0] >= 0 and self.n > candi[1] >= 0:
-                #                 hood.append(candi)
+                
                 if pos not in hood:
                     for i in self.chain[0:(len(self.chain) - 1)]:
                         QtWidgets.qApp.processEvents()
@@ -5047,61 +5044,6 @@ class Ui_Formiki(object):
                     self.lcdNumber_2.display(len(self.wordlist))
 
 
-
-        # # a = ps[0]
-        # # b = ps[1]
-        # li=[]
-        # hood = []
-        #
-        # if pressed:
-        #     self.chain.append(i_list(source, self.blist))
-        #     if len(self.chain)>1 and self.blist[self.chain[-2][0]][self.chain[-2][1]] != source:    # if chain is longer than 1 element and last element isn't the pressed button
-        #         for i in self.chain[0:(len(self.chain)-2)]:    # other than the last element(which is the pressed one) every element will be default colored
-        #             QtWidgets.qApp.processEvents()
-        #             self.blist[i[0]][i[1]].setStyleSheet(" color: #303030;\n"
-        #                                        "\n"
-        #                                        "background: #e87461 ;\n"
-        #                                        "border: 2px solid #303030;\n"
-        #                                        "    border-radius: 20px;\n"
-        #                                        "    border-style: outset;\n"
-        #                                        "\n"
-        #                                        "Text-align:center")
-        #
-        #             self.w = ""    # the word will be deleted
-        #             self.chain = []    # chain will be resetted
-        #             self.AItextEdit_2.setText("")    # Text edit will be resetted
-        #
-        #         source.setStyleSheet(" color: #303030;\n"
-        #                              "\n"
-        #                              "background: #74b9ff ;\n"
-        #                              "border: 2px solid #303030;\n"
-        #                              "    border-radius: 20px;\n"
-        #                              "    border-style: outset;\n"
-        #                              "\n"
-        #                              "Text-align:center;")
-        #
-        #
-        #
-        #
-        #
-        #
-        # #     else:
-        # #         source.setStyleSheet(" color: #303030;\n"
-        # #                                          "\n"
-        # #                                          "background: #74b9ff ;\n"
-        # #                                          "border: 2px solid #303030;\n"
-        # #                                          "    border-radius: 20px;\n"
-        # #                                          "    border-style: outset;\n"
-        # #                                          "\n"
-        # #                                          "Text-align:center;")
-        # #
-        # #     #self.pushButton_00.
-        # #     self.w += source.text()
-        # #     if len(self.w) >= 3 and self.w in self.words.list:
-        # #         self.AItextEdit_2.setText(self.w)
-        # #
-        # #
-        # #
         else:
             QtWidgets.qApp.processEvents()
             source.setStyleSheet(self.defa)
@@ -5128,6 +5070,7 @@ class Ui_Formiki(object):
             self.dfsed = True
 
         txt = self.lineEdit.text()
+        self.w = txt
         blinklist = []
         hood = []
         self.label_4.setText(txt)
@@ -5146,6 +5089,7 @@ class Ui_Formiki(object):
                                 for k in j:
                                     x, y = k
                                     self.blist[x][y].setStyleSheet(self.red)
+                                    self.chain.append((x,y))
                     self.label_4.setText("Already in the list!")
                 else:
                     self.wordlist.append(txt)
@@ -5157,6 +5101,7 @@ class Ui_Formiki(object):
                                 for k in j:
                                     x, y = k
                                     self.blist[x][y].setStyleSheet(self.green)
+                                    self.chain.append((x,y))
                     points = 0
                     polist = list(self.wordlist)
                     
@@ -5181,13 +5126,23 @@ class Ui_Formiki(object):
                             for k in j:
                                 x, y = k
                                 self.blist[x][y].setStyleSheet(self.blue)
+                                self.chain.append((x,y))
 
 
 
 
 
-
-        
+    def cheat(self):
+        if self.chain == []:
+            return
+        self.stop = False
+        temp = copy.deepcopy(self.board.letters)
+        for k in self.chain:
+            i, j = k
+            temp[i][j] = '-'
+        Board.dfs(self.board, temp, self.trie, self.chain[len(self.chain) - 1], self.w, False, None, True, self, [(i,j)], delay=0)
+        for i in self.chain:
+                 self.blist[i[0]][i[1]].setStyleSheet(self.blue)
 
     def vstimestart(self):
         self.stop = False
