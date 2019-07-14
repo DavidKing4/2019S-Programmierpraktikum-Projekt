@@ -4881,7 +4881,7 @@ class Ui_Formiki(object):
             for i in range(self.n):
                 for j in range(self.n):
                     self.blist[i][j].show()
-        if self.n>=10:
+        if self.n>=10:    # If Board is big, make it full screen
             Formiki.showFullScreen()
 
         # if self.t1.isAlive():
@@ -4908,6 +4908,10 @@ class Ui_Formiki(object):
             if self.t1.isAlive():
                 pass
             else:
+                self.chain = []
+                self.w= ""
+                self.wordlist =[]
+                self.all_uncheck()
                 self.cleartable()
                 self.dis_act_all(active=True)
                 self.all_default_col()
@@ -5149,18 +5153,23 @@ class Ui_Formiki(object):
     
     def dis_act_all(self, active = False):
         if active == True:
-            for i in range(self.n - 1):
-                for j in range(self.n - 1):
+            for i in range(self.n ):
+                for j in range(self.n ):
                     self.blist[i][j].setEnabled(True)
                     
         else:
-            for i in range(self.n-1):
-                for j in range(self.n-1):
+            for i in range(self.n):
+                for j in range(self.n):
                     self.blist[i][j].setEnabled(False)
+    
     def all_default_col(self):
-        for i in range(self.n - 1):
-            for j in range(self.n - 1):
+        for i in range(self.n ):
+            for j in range(self.n ):
                 self.blist[i][j].setStyleSheet(self.defa)
+    def all_uncheck(self):
+        for i in range(self.n ):
+            for j in range(self.n ):
+                self.blist[i][j].setChecked(False)
     
 
 
