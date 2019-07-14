@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from Mode1 import Ui_Form
 from Mode2 import Ui_Formiki
 from Board import Board
+from PyQt5.QtWidgets import *
 
 
 class Ui_MainWindow(object):
@@ -249,7 +250,7 @@ class Ui_MainWindow(object):
         font.setFamily("Cambria Math")
         font.setPointSize(14)
         self.pushButton_4.setFont(font)
-        self.pushButton_4.setEnabled(False)
+        #self.pushButton_4.setEnabled(False)
         self.pushButton_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_4.setStyleSheet(" color: #303030;\n"
 "\n"
@@ -423,8 +424,11 @@ class Ui_MainWindow(object):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
+    app.setStyle('Fusion')
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
+
