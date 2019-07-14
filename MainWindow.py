@@ -1,16 +1,12 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'MainTest.ui'
-#
-# Created by: PyQt5 UI code generator 5.12
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
+from Mode1 import Ui_Form
+from Mode2 import Ui_Formiki
+from Board import Board
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        self.MainWindow = MainWindow
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(600, 360)
         MainWindow.setAutoFillBackground(False)
@@ -113,6 +109,7 @@ class Ui_MainWindow(object):
         self.checkBox.setObjectName("checkBox")
         self.horizontalLayout_4.addWidget(self.checkBox)
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit.hide()
         self.lineEdit.setEnabled(False)
         font = QtGui.QFont()
         font.setFamily("Cambria")
@@ -310,6 +307,10 @@ class Ui_MainWindow(object):
         self.actionQuit.triggered.connect(self.pushButton.click)
         self.checkBox.clicked['bool'].connect(self.lineEdit.show)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        
+    def __init__(self):
+        self.b = None
+        self.n = None
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -332,7 +333,85 @@ class Ui_MainWindow(object):
         self.actionQuit.setText(_translate("MainWindow", "Quit"))
 
 
+        self.SolverRadio.clicked.connect(self.openMain)
+        self.VsCompRadio.clicked.connect(self.openMain)
+        self.pushButton_4.clicked.connect(self.initbuttons)
+        
+    """BUTTON FUNCTIONS"""
+    def openMain(self):
+        MainWindow.close()
+        self.n = self.horizontalSlider.value()
+        
+        if self.checkBox.isChecked():
+            try:
+                letters = [['' for i in range(n)] for j in range(n)]
+                lRaw = self.lineEdit.text()
+                index = 0
+                for i in range(n):
+                    for j in range(n):
+                        letters[i][j] = lRaw[index]
+                        index += 1
+            except:
+                print(f'Custom input should have {n ** 2} letters, entered as one string,')
+                print('please try again.')
+                self.label_5.setText(f'Custom input should have {n ** 2} letters, entered as one string,\nplease try again.')
+                sys.exit()
 
+            self.b = Board(self.spinBox.value(), False, letters)
+        
+        else:
+            b = None
+        
+        if self.SolverRadio.isChecked():
+            global Form
+            Form = QtWidgets.QWidget()
+            ui = Ui_Form(board=b, size=n, trie=None, words=None)
+            ui.setupUi(Form)
+            Form.show()
+        elif self.VsCompRadio.isChecked():
+            self.label_4.hide()
+            self.horizontalLayout_2.setEnabled(False)
+            self.lcdNumber_6.hide()
+            global Formiki
+            Formiki = QtWidgets.QWidget()
+            ui = Ui_Formiki(Formiki, board=b, size=n, trie=None, words=None)
+            ui.setupUi(Formiki)
+            Formiki.show()
+            
+    def initbuttons(self):
+        sender = self.MainWindow.sender()
+        MainWindow.close()
+        self.n = self.horizontalSlider.value()
+        if sender.text() == "Begin":
+            if self.checkBox.isChecked():
+                try:
+                    letters = [['' for i in range(self.n)] for j in range(self.n)]
+                    lRaw = self.lineEdit.text()
+                    index = 0
+                    for i in range(self.n):
+                        for j in range(self.n):
+                            letters[i][j] = lRaw[index]
+                            index += 1
+                except:
+                    print(f'Custom input should have {n ** 2} letters, entered as one string,')
+                    print('please try again.')
+                    self.label_5.setText(
+                        f'Custom input should have {n ** 2} letters, entered as one string,\nplease try again.')
+                    sys.exit()
+        
+                self.b = Board(self.horizontalSlider.value(), False, letters)
+            
+            global Form
+            Form = QtWidgets.QWidget()
+            ui = Ui_Form(board=self.b, size=self.n, trie=None, words=None)
+            ui.setupUi(Form)
+            Form.show()
+                
+            
+        
+        
+        
+        
 
 if __name__ == "__main__":
     import sys
