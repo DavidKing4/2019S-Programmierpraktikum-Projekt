@@ -396,7 +396,7 @@ class Ui_MainWindow(object):
                         f'Custom input should have {n ** 2} letters, entered as one string,\nplease try again.')
                     sys.exit()
         
-                self.b = Board(self.horizontalSlider.value(), False, letters, delay = dell)
+                self.b = Board(self.horizontalSlider.value(), False, letters)
             if self.SolverRadio.isChecked():
                 global Form
                 Form = QtWidgets.QWidget()
