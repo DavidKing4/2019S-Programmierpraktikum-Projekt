@@ -4850,6 +4850,7 @@ class Ui_Formiki(object):
         
         self.pushButton.clicked.connect(self.brokeiki)
         self.pushButton_4.clicked.connect(self.brokeiki)
+        self.pushButton_5.clicked.connect(self.brokeiki)
 
         # Shortcuts
         self.shortcut.activated.connect(self.cleartable)
@@ -4911,14 +4912,29 @@ class Ui_Formiki(object):
                 self.chain = []
                 self.w= ""
                 self.wordlist =[]
+                self.lcdNumber_2.display(0)
+                self.lcdNumber_3.display(0)
+                self.label_4.setText('')
                 self.all_uncheck()
                 self.cleartable()
                 self.dis_act_all(active=True)
                 self.all_default_col()
                 self.AItextEdit_2.setText("")
                 self.t1 = Thread(target=self.countdown, args=(self.ctd,))
-                self.t1.start()
-            
+                #self.t1.start()
+                self.pushButton_4.setText("Start")
+                self.pushButton_4.setStyleSheet(" color: #303030;\n"
+                                                "\n"
+                                                "background: #00b894 ;\n"
+                                                "border: 2px solid #303030;\n"
+                                                "    border-radius: 20px;\n"
+                                                "    border-style: outset;\n"
+                                                "\n"
+                                                "Text-align:center")
+        if sender.text() == "Stop":
+            #stop t1
+            pass
+
             
             
     
@@ -4942,9 +4958,9 @@ class Ui_Formiki(object):
             
     
 
-    def vstimesingle(self, pressed ):
+    def vstimesingle(self, pressed):
+        
         source = self.Formiki.sender()
-
 
         if pressed:
             self.label_4.setText("")
@@ -5092,29 +5108,44 @@ class Ui_Formiki(object):
         txt = self.lineEdit.text()
         blinklist = []
         hood = []
-        if len(txt) < 3:
+
+        
+        for i in self.blist:
+            for j in i:
+                j.setStyleSheet(self.defa)
+            #reset board
+        if txt != '':
+            for i in foundWordlist(txt, self.board.letters):
+                if i != None:
+                    for j in i:
+                        for k in j:
+                            x, y = k
+                            self.blist[x][y].setStyleSheet(self.blue)
+
+        # if len(txt) == 1:
+        #     blink = listi_list(txt[0], self.board.letters)
+        #     for j in blink:
+        #         self.blist[j[0]][j[1]].setStyleSheet(self.blue)
+
+        # elif len(txt)==2:
+        #     blink = listi_list(txt[0], self.board.letters)
+        #     for j in blink:
+        #         hood.append(self.hoodie(j))
+
+        #     blink2 = listi_list(txt[1], self.board.letters)
+        #     for jan in hood:
+        #         truth = []
+        #         for imp in blink2:
+        #             if imp in jan:
+        #                 self.blist[imp[0]][imp[1]].setStyleSheet(self.blue)
+        #                 truth.append(True)
+        #             else:
+        #                 truth.append(False)
+        #         if any(truth) == False:
+        #             a = blink[hood.index(jan)]
+        #             self.blist[a[0]][a[1]].setStyleSheet(self.defa)
 
 
-            if len(txt) == 1:
-                blink = listi_list(txt[0], self.board.letters)
-                for j in blink:
-                    self.blist[j[0]][j[1]].setStyleSheet(self.blue)
-            elif len(txt)==2:
-                blink = listi_list(txt[0], self.board.letters)
-                for j in blink:
-                    hood.append(self.hoodie(j))
-                blink2 = listi_list(txt[1], self.board.letters)
-                for jan in hood:
-                    truth = []
-                    for imp in blink2:
-                        if imp in jan:
-                            self.blist[imp[0]][imp[1]].setStyleSheet(self.blue)
-                            truth.append(True)
-                        else:
-                            truth.append(False)
-                    if any(truth) == False:
-                        a = blink[hood.index(jan)]
-                        self.blist[a[0]][a[1]].setStyleSheet(self.defa)
         # if len(text)>=3:
         #     for i in txt:
 
@@ -5128,18 +5159,18 @@ class Ui_Formiki(object):
         
 
     def vstimestart(self):
-            pass
+        pass
     
     """ SUPLEMENTARY METHODS """
 
     def countdown(self, nsec):
-            self.sec = nsec
-            for x in range(nsec, -1, -1):
-                QtWidgets.qApp.processEvents()
-                time.sleep(1)
-                self.lcdNumber.display(x)
-            self.sec = x
-            self.dis_act_all()
+        self.sec = nsec
+        for x in range(nsec, -1, -1):
+            QtWidgets.qApp.processEvents()
+            time.sleep(1)
+            self.lcdNumber.display(x)
+        self.sec = x
+        self.dis_act_all()
             
 
     def hoodie(self, last):
