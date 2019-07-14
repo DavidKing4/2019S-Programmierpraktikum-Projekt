@@ -53,20 +53,6 @@ class Board:
     def __str__(self):    # up connections counted before down connections in connection array
         return str(self.letters)
 
-    # a -- b -- a
-    # | /\ | /\ |
-    # a -- n -- t
-    # | /\ | /\ |
-    # p -- a -- t
-
-    # x 1- x 2- x 3- x
-    # 4 56 7 89 A BC D
-    # x E- x F- x G- x H
-    # I JK L MN O PQ R
-    # x S- x TU x V- x
-    # W XY Z ab c de f
-    # x g- x h- x i- x
-
     def spcPrint(self, connection = None):    # only functioning on a 4x4 board__
                                               # Primarily for debuging
         if connection is None:   # U -> "is" instead of "=="

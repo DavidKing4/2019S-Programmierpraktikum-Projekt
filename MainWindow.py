@@ -72,6 +72,7 @@ class Ui_MainWindow(object):
         self.SolverRadio.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.SolverRadio.setStyleSheet("")
         self.SolverRadio.setObjectName("SolverRadio")
+        self.SolverRadio.setChecked(True)
         self.verticalLayout.addWidget(self.SolverRadio)
         self.VsCompRadio = QtWidgets.QRadioButton(self.centralwidget)
         font = QtGui.QFont()
@@ -197,6 +198,7 @@ class Ui_MainWindow(object):
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_3.setMinimumSize(QtCore.QSize(70, 28))
         self.pushButton_3.setMaximumSize(QtCore.QSize(75, 28))
+        self.pushButton_3.hide()
         font = QtGui.QFont()
         font.setFamily("Cambria Math")
         font.setPointSize(14)
@@ -215,6 +217,7 @@ class Ui_MainWindow(object):
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setMinimumSize(QtCore.QSize(70, 28))
         self.pushButton_2.setMaximumSize(QtCore.QSize(75, 28))
+        self.pushButton_2.hide()
         font = QtGui.QFont()
         font.setFamily("Cambria Math")
         font.setPointSize(14)
@@ -290,15 +293,15 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.actionBegin = QtWidgets.QAction(MainWindow)
         self.actionBegin.setObjectName("actionBegin")
-        self.actionGame_Manual = QtWidgets.QAction(MainWindow)
-        self.actionGame_Manual.setObjectName("actionGame_Manual")
-        self.actionHigh_Scores = QtWidgets.QAction(MainWindow)
-        self.actionHigh_Scores.setObjectName("actionHigh_Scores")
+        # self.actionGame_Manual = QtWidgets.QAction(MainWindow)
+        # self.actionGame_Manual.setObjectName("actionGame_Manual")
+        # self.actionHigh_Scores = QtWidgets.QAction(MainWindow)
+        # self.actionHigh_Scores.setObjectName("actionHigh_Scores")
         self.actionQuit = QtWidgets.QAction(MainWindow)
         self.actionQuit.setObjectName("actionQuit")
         self.menuFile.addAction(self.actionBegin)
-        self.menuFile.addAction(self.actionGame_Manual)
-        self.menuFile.addAction(self.actionHigh_Scores)
+        # self.menuFile.addAction(self.actionGame_Manual)
+        # self.menuFile.addAction(self.actionHigh_Scores)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionQuit)
         self.menubar.addAction(self.menuFile.menuAction())
@@ -307,11 +310,11 @@ class Ui_MainWindow(object):
         self.horizontalSlider.sliderMoved['int'].connect(self.lcdNumber_5.display)
         self.horizontalSlider_2.sliderMoved['int'].connect(self.lcdNumber_6.display)
         self.checkBox.clicked['bool'].connect(self.lineEdit.setEnabled)
-        self.actionGame_Manual.triggered.connect(self.pushButton_2.click)
+        # self.actionGame_Manual.triggered.connect(self.pushButton_2.click)
         self.actionBegin.triggered.connect(self.pushButton_4.click)
-        self.actionHigh_Scores.triggered.connect(self.pushButton_3.click)
+        # self.actionHigh_Scores.triggered.connect(self.pushButton_3.click)
         self.actionQuit.triggered.connect(self.pushButton.click)
-        self.checkBox.clicked['bool'].connect(self.lineEdit.show)
+        self.checkBox.clicked.connect(self.showLineEdit)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
         
@@ -320,10 +323,6 @@ class Ui_MainWindow(object):
         self.n = None
         self.delay = None
         
-        
-        
-
-    
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -335,14 +334,14 @@ class Ui_MainWindow(object):
         self.lineEdit.setPlaceholderText(_translate("MainWindow", "Ex: abcdefghjklmnopr"))
         self.label_2.setText(_translate("MainWindow", "Board size  "))
         self.label_4.setText(_translate("MainWindow", "Com. Speed"))
-        self.pushButton_3.setText(_translate("MainWindow", "Scores"))
-        self.pushButton_2.setText(_translate("MainWindow", "Manual"))
+        # self.pushButton_3.setText(_translate("MainWindow", "Scores"))
+        # self.pushButton_2.setText(_translate("MainWindow", "Manual"))
         self.pushButton_4.setText(_translate("MainWindow", "Begin"))
         self.pushButton.setText(_translate("MainWindow", "Quit"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionBegin.setText(_translate("MainWindow", "Begin"))
-        self.actionGame_Manual.setText(_translate("MainWindow", "Game Manual"))
-        self.actionHigh_Scores.setText(_translate("MainWindow", "High Scores"))
+        # self.actionGame_Manual.setText(_translate("MainWindow", "Game Manual"))
+        # self.actionHigh_Scores.setText(_translate("MainWindow", "High Scores"))
         self.actionQuit.setText(_translate("MainWindow", "Quit"))
 
 
@@ -354,58 +353,25 @@ class Ui_MainWindow(object):
         self.SolverRadio.clicked.connect(self.hidi)
         
         
-        
-    
-    """BUTTON FUNCTIONS"""
-    # def openMain(self):
-    #     MainWindow.close()
-    #     self.n = self.horizontalSlider.value()
-    #
-    #     if self.checkBox.isChecked():
-    #         try:
-    #             letters = [['' for i in range(n)] for j in range(n)]
-    #             lRaw = self.lineEdit.text()
-    #             index = 0
-    #             for i in range(n):
-    #                 for j in range(n):
-    #                     letters[i][j] = lRaw[index]
-    #                     index += 1
-    #         except:
-    #             print(f'Custom input should have {n ** 2} letters, entered as one string,')
-    #             print('please try again.')
-    #             self.label_5.setText(f'Custom input should have {n ** 2} letters, entered as one string,\nplease try again.')
-    #             sys.exit()
-    #
-    #         self.b = Board(self.spinBox.value(), False, letters)
-    #
-    #     else:
-    #         b = None
-    #
-    #     if self.SolverRadio.isChecked():
-    #         global Form
-    #         Form = QtWidgets.QWidget()
-    #         ui = Ui_Form(board=b, size=n, trie=None, words=None)
-    #         ui.setupUi(Form)
-    #         Form.show()
-    #     elif self.VsCompRadio.isChecked():
-    #         self.label_4.hide()
-    #         self.horizontalLayout_2.setEnabled(False)
-    #         self.lcdNumber_6.hide()
-    #         global Formiki
-    #         Formiki = QtWidgets.QWidget()
-    #         ui = Ui_Formiki(Formiki, board=b, size=n, trie=None, words=None)
-    #         ui.setupUi(Formiki)
-    #         Formiki.show()
-    
+
+    def showLineEdit(self):
+        if self.checkBox.isChecked():
+            self.lineEdit.show()
+        else:
+            self.lineEdit.hide()    
+
     def hidi(self):
         if self.VsCompRadio.isChecked():
             self.pushButton_4.setEnabled(True)
             self.label_4.hide()
             self.horizontalLayout_2.setEnabled(False)
             self.lcdNumber_6.hide()
-            self.label_4.hide()
+            self.horizontalSlider_2.hide()
         if self.SolverRadio.isChecked():
             self.pushButton_4.setEnabled(True)
+            self.label_4.show()
+            self.lcdNumber_6.show()
+            self.horizontalSlider_2.show()
             
     def initbuttons(self):
         sender = self.MainWindow.sender()
