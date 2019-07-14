@@ -5188,7 +5188,19 @@ class Ui_Formiki(object):
         
 
     def vstimestart(self):
-        pass
+        self.stop = False
+        for i in range(self.n):
+                for j in range(self.n):
+                    startChar = self.board.letters[i][j]
+                    temp = copy.deepcopy(self.board.letters)
+                    temp[i][j] = '-'
+                    Board.dfs(self.board, temp, self.trie, (i,j), startChar, False, None, True, self, [(i,j)], delay=0)
+
+        self.board.words.sort()
+        self.AItextEdit_2.clear()
+        for i in self.board.words:
+            self.AItextEdit_2.append(i)
+        
     
     """ SUPLEMENTARY METHODS """
 

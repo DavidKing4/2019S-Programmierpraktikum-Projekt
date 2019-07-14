@@ -185,7 +185,10 @@ class Board:
                                          "\n"
                                          "Text-align:center;")
                     time.sleep(d)
-                gui.textEdit.append(f'--> {prefix}')
+                try:
+                    gui.textEdit.append(f'--> {prefix}')
+                except:
+                    gui.AItextEdit_2.append(f'--> {prefix}')
                 time.sleep(d)
                 QtWidgets.qApp.processEvents()
 
