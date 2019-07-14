@@ -7,6 +7,7 @@ from PyQt5.QtGui import QKeySequence
 from OutFunc import *
 from operator import add
 from threading import Thread
+from PyQt5.QtWidgets import *
 
 
 
@@ -4900,6 +4901,7 @@ class Ui_Formiki(object):
             #self.t1 = Thread(target=self.countdown, args=(self.ctd,))
             
             self.dis_act_all(active=True)
+            self.all_default_col()
             # self.lcdNumber.display(formatSec(self.countdown(180)))
             self.t1.start()
             self.pushButton_4.setText("Rest.")
@@ -5175,6 +5177,7 @@ class Ui_Formiki(object):
 
 
     
+
 
 
 
