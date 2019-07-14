@@ -4428,7 +4428,7 @@ class Ui_Formiki(object):
 
     """ BOARD SETTINGS """
 
-    def __init__(self, Formiki, board=None, size=10, trie=None, words=None, seconds=10):
+    def __init__(self, Formiki, board=None, size=6, trie=None, words=None, seconds=10):
         self.n = size
         self.w = ""
         self.wordlist = []
