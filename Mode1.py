@@ -4746,7 +4746,7 @@ class Ui_Form(object):
                 temp = copy.deepcopy(self.board.letters)
                 temp[i][j] = '-'
 
-                Board.dfs(self.board, temp, stringTrie, (i,j), startChar, False, None, False, self, [(i,j)], delay=0)
+                Board.dfs(self.board, temp, stringTrie, (i,j), startChar, False, None, self.vis, self, [(i,j)], delay=0)
 
                 if self.stop:
                     self.progressBar.setValue(0)
@@ -4775,6 +4775,8 @@ class Ui_Form(object):
             if self.stop:
                 break
 
+        if not self.stop:
+            self.progressBar.setValue(100)
         self.board.words = list(set(self.board.words))
         self.board.words.sort()
         self.textEdit.clear()
