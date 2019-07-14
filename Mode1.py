@@ -4653,6 +4653,9 @@ class Ui_Form(object):
                     self.blist[i][j].show()
                     #self.blist[0][4].show()
                     #Form.resize(1920, 1080)
+        
+        if self.n>=10:    # If Board is big, make it full screen
+            Form.showFullScreen()
 
 
 
