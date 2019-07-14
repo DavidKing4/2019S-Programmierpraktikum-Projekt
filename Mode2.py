@@ -1,5 +1,6 @@
 from Board import *
 from Words import *
+import copy
 import Mode1 as m1
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QShortcut
@@ -4437,6 +4438,7 @@ class Ui_Formiki(object):
         self.paths = []
         self.ctd = seconds
         self.sec = None
+        self.dfsed = False
 
         self.t1 = Thread(target=self.countdown, args=(self.ctd,))
 
@@ -4481,6 +4483,13 @@ class Ui_Formiki(object):
             a= 700
             b=515
             Formiki.resize(a + self.n*(2*9), b+self.n*(2*16))
+
+        # for i in range(self.n):
+        #     for j in range(self.n):
+        #         startChar = self.board.letters[i][j]
+        #         temp = copy.deepcopy(self.board.letters)
+        #         temp[i][j] = '-'
+        #         Board.dfs(self.board, temp, self.trie, (i,j), startChar, False, None, False, None, [(i,j)], delay=0)
 
     def retranslateUi(self, Formiki):
         _translate = QtCore.QCoreApplication.translate
@@ -4885,6 +4894,7 @@ class Ui_Formiki(object):
         if self.n>=10:    # If Board is big, make it full screen
             Formiki.showFullScreen()
 
+
         # if self.t1.isAlive():
         #         self.pushButton_4.setEnabled(False)
         # else:
@@ -5105,51 +5115,69 @@ class Ui_Formiki(object):
                 self.blist[i[0]][i[1]].setEnabled(False)
 
     def textToClick(self):
+
+        if not self.dfsed:
+            for i in range(self.n):
+                for j in range(self.n):
+                    startChar = self.board.letters[i][j]
+                    temp = copy.deepcopy(self.board.letters)
+                    temp[i][j] = '-'
+                    Board.dfs(self.board, temp, self.trie, (i,j), startChar, False, None, False, None, [(i,j)], delay=0)
+            self.dfsed = True
+
         txt = self.lineEdit.text()
         blinklist = []
         hood = []
-
         
         for i in self.blist:
             for j in i:
                 j.setStyleSheet(self.defa)
             #reset board
         if txt != '':
-            for i in foundWordlist(txt, self.board.letters):
-                if i != None:
-                    for j in i:
-                        for k in j:
-                            x, y = k
-                            self.blist[x][y].setStyleSheet(self.blue)
-
-        # if len(txt) == 1:
-        #     blink = listi_list(txt[0], self.board.letters)
-        #     for j in blink:
-        #         self.blist[j[0]][j[1]].setStyleSheet(self.blue)
-
-        # elif len(txt)==2:
-        #     blink = listi_list(txt[0], self.board.letters)
-        #     for j in blink:
-        #         hood.append(self.hoodie(j))
-
-        #     blink2 = listi_list(txt[1], self.board.letters)
-        #     for jan in hood:
-        #         truth = []
-        #         for imp in blink2:
-        #             if imp in jan:
-        #                 self.blist[imp[0]][imp[1]].setStyleSheet(self.blue)
-        #                 truth.append(True)
-        #             else:
-        #                 truth.append(False)
-        #         if any(truth) == False:
-        #             a = blink[hood.index(jan)]
-        #             self.blist[a[0]][a[1]].setStyleSheet(self.defa)
-
-
-        # if len(text)>=3:
-        #     for i in txt:
-
-
+            if txt in self.board.words:
+                # Repetition prevention # self.chain in self.paths or
+                if txt in self.wordlist:
+                    for i in foundWordlist(txt, self.board.letters):
+                        if i != None:
+                            for j in i:
+                                for k in j:
+                                    x, y = k
+                                    self.blist[x][y].setStyleSheet(self.red)
+                    self.label_4.setText("Already in the list!")
+                else:
+                    self.wordlist.append(txt)
+                    self.AItextEdit_2.append(txt)
+                    
+                    for i in foundWordlist(txt, self.board.letters):
+                        if i != None:
+                            for j in i:
+                                for k in j:
+                                    x, y = k
+                                    self.blist[x][y].setStyleSheet(self.green)
+                    points = 0
+                    polist = list(self.wordlist)
+                    
+                    # Points
+                    for po in polist:
+                            if len(po) <= 4:
+                                    points += 1
+                            elif len(po) == 5:
+                                    points += 2
+                            elif len(po) == 6:
+                                    points += 3
+                            elif len(po) == 7:
+                                    points += 5
+                            elif len(po) > 7:
+                                    points += 11
+                    self.lcdNumber_3.display(points)
+                    self.lcdNumber_2.display(len(self.wordlist))
+            else:
+                for i in foundWordlist(txt, self.board.letters):
+                    if i != None:
+                        for j in i:
+                            for k in j:
+                                x, y = k
+                                self.blist[x][y].setStyleSheet(self.blue)
 
 
 

@@ -227,14 +227,14 @@ class Board:
                     self.dfs(newBoard, trie, newStart, newPrefix, cmdVis, newCon, guiVis, gui, newChainList, d)
                     # dfs @i with modified bord & prefix
                     # add word to list if it is at the end of the trie
-
-        gui.blist[start[0]][start[1]].setStyleSheet(" color: #303030;\n"
-                                         "\n"
-                                         "background: #e87461 ;\n"
-                                         "border: 2px solid #303030;\n"
-                                         "    border-radius: 20px;\n"
-                                         "    border-style: outset;\n"
-                                         "\n"
-                                         "Text-align:center")
+        if guiVis:
+            gui.blist[start[0]][start[1]].setStyleSheet(" color: #303030;\n"
+                                             "\n"
+                                             "background: #e87461 ;\n"
+                                             "border: 2px solid #303030;\n"
+                                             "    border-radius: 20px;\n"
+                                             "    border-style: outset;\n"
+                                             "\n"
+                                             "Text-align:center")
         time.sleep(d)
         return
