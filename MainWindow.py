@@ -2,6 +2,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from Mode1 import Ui_Form
 from Mode2 import Ui_Formiki
 from Board import Board
+import random
+import string
 from PyQt5.QtWidgets import *
 
 
@@ -323,6 +325,15 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuFile.menuAction())
         self.spinBox = QtWidgets.QSpinBox(self.centralwidget)
         self.spinBox.setFont(font)
+        # self.spinBox.setStyleSheet(" color: #303030;\n"
+        #                             "\n"
+        #                             "background:#f2f1ef ;\n"
+        #                             "\n"
+        #                             "border: 2px solid #303030;\n"
+        #                             "    border-radius: 20px;\n"
+        #                             "    border-style: outset;\n"
+        #                             "\n"
+        #                             "Text-align:center")
         self.spinBox.setMinimum(3)
         self.spinBox.setObjectName("spinBox")
         self.spinBox.setMaximumHeight(20)
@@ -410,13 +421,22 @@ class Ui_MainWindow(object):
                 try:
                     letters = [['' for i in range(self.n)] for j in range(self.n)]
                     lRaw = self.lineEdit.text()
+                    for i in lRaw:
+                        if i not in string.ascii_letters[:26]:
+                            lRaw= lRaw.replace(i, random.choice(string.ascii_letters[:26]))
+                    if len(lRaw)< self.n**2:
+                        fark = self.n**2-len(lRaw)
+                        for i in range(fark):
+                            lRaw = lRaw+random.choice(string.ascii_letters[:26])
+                    lRaw = lRaw[:self.n**2]
+                    
                     index = 0
                     for i in range(self.n):
                         for j in range(self.n):
                             letters[i][j] = lRaw[index]
                             index += 1
                 except:
-                    print(f'Custom input should have {n ** 2} letters, entered as one string,')
+                    print(f'Custom input should have {self.n ** 2} letters, entered as one string,')
                     print('please try again.')
                     # self.label_5.setText(
                     #     f'Custom input should have {n ** 2} letters, entered as one string,\nplease try again.')
