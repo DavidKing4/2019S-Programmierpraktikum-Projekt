@@ -160,6 +160,7 @@ class Ui_MainWindow(object):
 "\n"
 "Text-align:center")
         self.lcdNumber_5.setObjectName("lcdNumber_5")
+        self.lcdNumber_5.setMaximumHeight(40)
         self.horizontalLayout_2.addWidget(self.lcdNumber_5)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
@@ -189,6 +190,7 @@ class Ui_MainWindow(object):
 "   \n"
 "Text-align:center")
         self.lcdNumber_6.setObjectName("lcdNumber_6")
+        self.lcdNumber_5.setMaximumHeight(40)
         self.horizontalLayout_3.addWidget(self.lcdNumber_6)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
         self.verticalLayout_3.addLayout(self.verticalLayout_2)
@@ -204,15 +206,11 @@ class Ui_MainWindow(object):
         #self.label_3.hide()
         self.label_3.setObjectName("label_3")
         self.horizontalLayout.addWidget(self.label_3)
-        self.spinBox = QtWidgets.QSpinBox(self.centralwidget)
         
         font = QtGui.QFont()
         font.setFamily("Cambria Math")
         font.setPointSize(12)
-        self.spinBox.setFont(font)
-        self.spinBox.setMinimum(3)
-        self.spinBox.setObjectName("spinBox")
-        self.horizontalLayout.addWidget(self.spinBox)
+        #self.horizontalLayout.addWidget(self.spinBox)
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_3.setMinimumSize(QtCore.QSize(70, 28))
         self.pushButton_3.setMaximumSize(QtCore.QSize(75, 28))
@@ -323,6 +321,13 @@ class Ui_MainWindow(object):
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionQuit)
         self.menubar.addAction(self.menuFile.menuAction())
+        self.spinBox = QtWidgets.QSpinBox(self.centralwidget)
+        self.spinBox.setFont(font)
+        self.spinBox.setMinimum(3)
+        self.spinBox.setObjectName("spinBox")
+        self.spinBox.setMaximumHeight(20)
+        self.spinBox.hide()
+        self.verticalLayout.addWidget(self.spinBox)
 
         self.retranslateUi(MainWindow)
         self.horizontalSlider.sliderMoved['int'].connect(self.lcdNumber_5.display)
@@ -385,11 +390,14 @@ class Ui_MainWindow(object):
             self.horizontalLayout_2.setEnabled(False)
             self.lcdNumber_6.hide()
             self.horizontalSlider_2.hide()
+            self.spinBox.show()
         if self.SolverRadio.isChecked():
             self.pushButton_4.setEnabled(True)
             self.label_4.show()
             self.lcdNumber_6.show()
             self.horizontalSlider_2.show()
+            self.spinBox.hide()
+
             
     def initbuttons(self):
         sender = self.MainWindow.sender()
@@ -450,5 +458,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
-
